@@ -1,4 +1,5 @@
 ﻿use NORTHWND;
+
 -- hàm đếm số lượng count()
 -- select count(tên_cột)
 -- from tên_bảng
