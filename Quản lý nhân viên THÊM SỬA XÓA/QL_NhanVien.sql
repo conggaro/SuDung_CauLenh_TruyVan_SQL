@@ -44,3 +44,43 @@ from TaiKhoan;
 
 -- Sử dụng câu lệnh drop table
 drop table TaiKhoan;
+
+
+-- Tạo procedure trong SQL
+create procedure Lay_TatCa_BanGhi
+as begin
+select * from TaiKhoan
+end
+
+-- gọi procedure
+execute Lay_TatCa_BanGhi
+
+
+-- Tạo procedure có tham số trong SQL
+create procedure Lay_BanGhi_Theo_stt
+@thamSo int
+as begin
+(
+	select *
+	from TaiKhoan
+	where stt = (@thamSo)
+)
+end
+
+-- gọi procedure
+execute Lay_BanGhi_Theo_stt 1
+
+
+-- Tạo procedure có 2 tham số trong SQL
+create procedure Lay_BanGhi_Theo_DieuKien
+@thamSo1 int, @thamSo2 nvarchar(50)
+as begin
+(
+	select *
+	from TaiKhoan
+	where stt = (@thamSo1) and mat_khau = (@thamSo2)
+)
+end
+
+-- gọi procedure
+execute Lay_BanGhi_Theo_DieuKien 2, N'123456'
