@@ -200,3 +200,15 @@ select	ID,
 		year(DATE_OF_BIRTH) as N'Năm'
 
 from	EMPLOYEE
+
+
+-- sử dụng hàm substring()
+-- tham số 1: chuỗi string
+-- tham số 2: chỉ số bắt đầu
+-- tham số 3: độ dài chuỗi muốn cắt
+-- trong SQL Server thì chỉ số bắt đầu từ 1
+-- bình thường trong ngôn ngữ lập trình
+-- thì chỉ số được bắt đầu từ 0
+select	ID,
+		substring(FULL_NAME, 1, len(FULL_NAME)) as N'Họ tên'
+from	EMPLOYEE
