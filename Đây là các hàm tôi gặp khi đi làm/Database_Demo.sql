@@ -184,14 +184,17 @@ from EMPLOYEE;
 -- sử dụng hàm cast() để ép kiểu dữ liệu trong SQL Server
 select	ID,
 		
-		-- sử dụng hàm day()
-		-- và hàm cast()
+		-- cách 1:
+		-- sử dụng hàm day() và hàm cast()
 		-- trong đó, hàm cast() để chuyển
 		-- kiểu dữ liệu "date" sang kiểu dữ liệu "nvarchar"
 		cast(day(DATE_OF_BIRTH) as nvarchar(10)) as N'Ngày',
 		
-		-- chỉ sử dụng hàm month()
-		month(DATE_OF_BIRTH) as N'Tháng',
+		-- cách 2:
+		-- sử dụng hàm month() và hàm convert()
+		-- để chuyển kiểu dữ liệu "date" sang "nvarchar"
+		-- số 103 là format dd/MM/yyyy của SQL Server
+		convert(nvarchar(10), month(DATE_OF_BIRTH), 103) as N'Tháng',
 		
 		-- chỉ sử dụng hàm year()
 		year(DATE_OF_BIRTH) as N'Năm'
