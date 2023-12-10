@@ -21,3 +21,8 @@ else if tên_biến = 0<br>
 begin<br>
   print N'Kết quả: bằng 0';<br>
 end;<br>
+
+else
+begin<br>
+  print N'Kết quả: chắc là bị NULL rồi!';<br>
+end;
