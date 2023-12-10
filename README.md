@@ -10,4 +10,9 @@ Link học: https://www.youtube.com/watch?v=kQRpe1HkALE&list=PLyxSzL3F7484deka_j
 if tên_biến > 0<br>
 begin<br>
   print N'Kết quả: lớn hơn 0';<br>
-end;
+end;<br><br>
+
+else if tên_biến < 0<br>
+begin<br>
+  print N'Kết quả: nhỏ hơn 0';<br>
+end;<br><br>
