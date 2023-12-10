@@ -7,7 +7,7 @@ Link học: https://www.youtube.com/watch?v=kQRpe1HkALE&list=PLyxSzL3F7484deka_j
 1. DATE định dạng YYYY-MM-DD (năm-tháng-ngày).
 2. DATETIME định dạng: YYYY-MM-DD HH: MI: SS (năm-tháng-ngày giờ: phút: giây).
 # Câu lệnh điều kiện If
-if tên_biến > 0
-begin
-  print N'Kết quả: lớn hơn 0';
+if tên_biến > 0<br>
+begin<br>
+  print N'Kết quả: lớn hơn 0';<br>
 end;
