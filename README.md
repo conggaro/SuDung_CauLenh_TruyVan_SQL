@@ -22,7 +22,7 @@ begin<br>
   print N'Kết quả: bằng 0';<br>
 end;<br>
 
-else
+else<br>
 begin<br>
   print N'Kết quả: chắc là bị NULL rồi!';<br>
 end;
