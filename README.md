@@ -30,3 +30,8 @@ end;
 alter table tên_bảng<br>
 add constraint<br>
 primary key (tên_cột);
+# Thêm khóa ngoại
+alter table tên_bảng_con<br>
+add constraint<br>
+foreign key (tên_cột_con)<br>
+references tên_bảng_cha (tên_cột_cha);
