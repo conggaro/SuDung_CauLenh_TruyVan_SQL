@@ -26,3 +26,7 @@ else<br>
 begin<br>
   print N'Kết quả: chắc là bị NULL rồi!';<br>
 end;
+# Thêm khóa chính
+alter table tên_bảng<br>
+add constraint<br>
+primary key (tên_cột);
