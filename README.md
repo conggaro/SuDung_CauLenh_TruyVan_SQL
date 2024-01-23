@@ -49,5 +49,5 @@ Ví dụ: sqlcmd -S 192.168.60.22,1433 -d HISTAFF_SQL_DEV -U sa -P MatKhau@123
 Khi truy cập thành công thì trên màn hình có ký tự "1>"
 <br>
 Bạn chỉ cần gõ:<br>
-<code>"1>select * from Tên_bảng"<code><br>
-<code>"2>go"<code>
+<code>select * from Tên_bảng</code><br>
+<code>go</code>
