@@ -37,8 +37,9 @@ foreign key (tên_cột_con)<br>
 references tên_bảng_cha (tên_cột_cha);
 
 # Sử dụng SQL Server bằng Command Prompt
-1. Chế độ thường (Windows Authentication)
+Chế độ thường (Windows Authentication)<br>
 <code>sqlcmd -S <tên server> -d <tên database> -E</code>
 <br>
-2. Chế độ xác thực (SQL Server Authentication)
+
+Chế độ xác thực (SQL Server Authentication)<br>
 <code>sqlcmd -S <tên server> -d <tên database> -U <tên đăng nhập> -P <mật khẩu></code>
