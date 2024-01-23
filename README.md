@@ -42,4 +42,5 @@ Chế độ thường (Windows Authentication)<br>
 <br>
 
 Chế độ xác thực (SQL Server Authentication)<br>
-<code>sqlcmd -S <tên server> -d <tên database> -U <tên đăng nhập> -P <mật khẩu></code>
+<code>sqlcmd -S <tên server> -d <tên database> -U <tên đăng nhập> -P <mật khẩu></code><br>
+Ví dụ: sqlcmd -S 192.168.60.22,1433 -d HISTAFF_SQL_DEV -U sa -P MatKhau@123
