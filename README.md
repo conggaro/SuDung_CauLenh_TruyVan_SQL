@@ -44,3 +44,10 @@ Chế độ thường (Windows Authentication)<br>
 Chế độ xác thực (SQL Server Authentication)<br>
 <code>sqlcmd -S <tên server> -d <tên database> -U <tên đăng nhập> -P <mật khẩu></code><br>
 Ví dụ: sqlcmd -S 192.168.60.22,1433 -d HISTAFF_SQL_DEV -U sa -P MatKhau@123
+
+<br>
+Khi truy cập thành công thì trên màn hình có ký tự "1>"
+<br>
+Bạn chỉ cần gõ:
+"1>select * from Tên_bảng"<br>
+"2>go"
