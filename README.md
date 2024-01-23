@@ -35,3 +35,10 @@ alter table tên_bảng_con<br>
 add constraint tên_ràng_buộc<br>
 foreign key (tên_cột_con)<br>
 references tên_bảng_cha (tên_cột_cha);
+
+# Sử dụng SQL Server bằng Command Prompt
+1. Chế độ thường (Windows Authentication)
+<code>sqlcmd -S <tên server> -d <tên database> -E</code>
+<br>
+2. Chế độ xác thực (SQL Server Authentication)
+<code>sqlcmd -S <tên server> -d <tên database> -U <tên đăng nhập> -P <mật khẩu></code>
