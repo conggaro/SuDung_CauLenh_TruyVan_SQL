@@ -51,7 +51,8 @@ Khi truy cập thành công thì trên màn hình có ký tự "1>"
 Bạn chỉ cần gõ:<br>
 <code>select * from Tên_bảng</code><br>
 <code>go</code>
+
 # Định dạng số
 Nếu bạn muốn 123456789 thành 123,456,789<br>
-<code></code>DECLARE @number BIGINT = 123456789;
+<code>DECLARE @number BIGINT = 123456789;
 SELECT FORMAT(@number, '#,##0');</code>
