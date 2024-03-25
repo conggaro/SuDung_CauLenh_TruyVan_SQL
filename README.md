@@ -61,4 +61,4 @@ SELECT FORMAT(@number, '#,##0');</code>
 Cách 1:<br>
 <code>declare @sqlString nvarchar(max);
 set @sqlString = 'select * from HU_EMPLOYEE';
-EXECUTE sp_executesql @sqlString;</code>
+execute sp_executesql @sqlString;</code>
