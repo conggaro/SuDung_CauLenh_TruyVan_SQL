@@ -62,7 +62,7 @@ Cách 1:<br>
 <code>declare @sqlString nvarchar(max);
 set @sqlString = 'select * from HU_EMPLOYEE';
 execute sp_executesql @sqlString;</code>
-<br>
+<br><br>
 Cách 2: <br>
 <code>declare @sqlString nvarchar(max);
 set @sqlString = 'select * from HU_EMPLOYEE';
