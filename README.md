@@ -59,9 +59,6 @@ SELECT FORMAT(@number, '#,##0');</code>
 
 # Thực thi lệnh SQL từ 1 biến có kiểu dữ liệu nvarchar(max)
 Cách 1:<br>
-<code>DECLARE @x NVARCHAR(MAX);
-SET @x = '
-SELECT top 5*
-FROM HU_EMPLOYEE;
-';
-EXECUTE sp_executesql @x;</code>
+<code>declare @sqlString nvarchar(max);
+set @sqlString = 'select * from HU_EMPLOYEE';
+EXECUTE sp_executesql @sqlString;</code>
