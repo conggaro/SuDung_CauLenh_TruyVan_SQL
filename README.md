@@ -67,3 +67,27 @@ Cách 2: <br>
 <code>declare @sqlString nvarchar(max);
 set @sqlString = 'select * from HU_EMPLOYEE';
 execute(@sqlString);</code>
+
+# Tạo hàm tính tổng - Kiểu trả về là Int
+-- tạo hàm tính tổng<br>
+create function TinhTong (<br>
+    @so1 int,<br>
+    @so2 int<br>
+)<br>
+returns int<br>
+as<br>
+begin<br>
+    declare @tong int;<br>
+
+    set @tong = @so1 + @so2;<br>
+
+    return @tong;<br>
+end;<br>
+
+
+-- gọi hàm tính tổng<br>
+select dbo.TinhTong(5, 7) AS Tong;<br>
+
+
+-- câu lệnh xóa hàm<br>
+drop function if exists dbo.TinhTong;
