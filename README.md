@@ -71,7 +71,7 @@ execute(@sqlString);</code>
 # Tạo hàm tính tổng - Kiểu trả về là Int
 -- tạo hàm tính tổng<br>
 create function TinhTong (<br>
-    &nbsp;@so1 int,<br>
+    &emsp;@so1 int,<br>
     &emsp;@so2 int<br>
 )<br>
 returns int<br>
