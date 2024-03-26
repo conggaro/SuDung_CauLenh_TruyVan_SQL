@@ -69,6 +69,7 @@ set @sqlString = 'select * from HU_EMPLOYEE';
 execute(@sqlString);</code>
 
 # Tạo hàm tính tổng - Kiểu trả về là Int
+<code>
 -- tạo hàm tính tổng<br>
 create function TinhTong (<br>
     &emsp;@so1 int,<br>
@@ -79,7 +80,7 @@ as<br>
 begin<br><span>
     &emsp;declare @tong int;<br>
 
-    <span>set @tong = @so1 + @so2;</span><br>
+    set @tong = @so1 + @so2;<br>
 
     return @tong;<br>
 end;<br>
@@ -90,4 +91,4 @@ select dbo.TinhTong(5, 7) AS Tong;<br>
 
 
 -- câu lệnh xóa hàm<br>
-drop function if exists dbo.TinhTong;
+drop function if exists dbo.TinhTong;</code>
