@@ -76,10 +76,10 @@ create function TinhTong (<br>
 )<br>
 returns int<br>
 as<br>
-begin<br>
+begin<br><span>
     &emsp;declare @tong int;<br>
 
-    set @tong = @so1 + @so2;<br>
+    <span>set @tong = @so1 + @so2;</span><br>
 
     return @tong;<br>
 end;<br>
