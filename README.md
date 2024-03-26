@@ -77,7 +77,7 @@ create function TinhTong (<br>
 returns int<br>
 as<br>
 begin<br>
-    declare @tong int;<br>
+    &emsp;declare @tong int;<br>
 
     set @tong = @so1 + @so2;<br>
 
