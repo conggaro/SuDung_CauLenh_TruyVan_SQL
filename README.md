@@ -74,3 +74,21 @@ Trong SQL Server, không có khái niệm về truyền tham chiếu giống nh�
 Khi bạn truyền một tham số cho một hàm hoặc thủ tục trong SQL Server, giá trị của tham số đó được sao chép và chuyển đến hàm hoặc thủ tục đó. Điều này có nghĩa là bất kỳ thay đổi nào bạn thực hiện trên tham số trong hàm hoặc thủ tục đó không ảnh hưởng đến giá trị của tham số gốc bên ngoài.<br>
 
 Tóm lại, trong SQL Server, không có khả năng truyền tham chiếu giống như trong một số ngôn ngữ lập trình khác.<br>
+
+# Sử dụng câu lệnh "set nocount on"
+Câu lệnh SET NOCOUNT ON<br>
+trong SQL Server được sử dụng để tắt việc<br>
+trả về số hàng bị ảnh hưởng bởi các câu lệnh DML (Data Manipulation Language)<br>
+như INSERT, UPDATE hoặc DELETE.<br>
+Khi bạn thực hiện một trong những câu lệnh này,<br>
+SQL Server mặc định sẽ trả về một thông báo với số lượng hàng bị ảnh hưởng,<br>
+nhưng khi bạn sử dụng SET NOCOUNT ON;,<br>
+thông báo này sẽ không được trả về.<br>
+
+Việc tắt thông báo số hàng bị ảnh hưởng<br>
+có thể hữu ích trong một số trường hợp,<br>
+như khi bạn muốn giảm kích thước dữ liệu trả về từ cơ sở dữ liệu<br>
+hoặc tăng hiệu suất của ứng dụng.<br>
+Tuy nhiên, cũng cần lưu ý rằng việc tắt thông báo này<br>
+có thể làm mất đi thông tin quan trọng<br>
+mà bạn có thể cần biết để theo dõi và gỡ lỗi các truy vấn.<br>
