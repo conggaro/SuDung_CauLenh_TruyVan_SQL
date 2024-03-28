@@ -76,7 +76,7 @@ Khi bạn truyền một tham số cho một hàm hoặc thủ tục trong SQL S
 Tóm lại, trong SQL Server, không có khả năng truyền tham chiếu giống như trong một số ngôn ngữ lập trình khác.<br>
 
 # Sử dụng câu lệnh "set nocount on"
-Câu lệnh SET NOCOUNT ON<br>
+Câu lệnh <code>set nocount on</code><br>
 trong SQL Server được sử dụng để tắt việc<br>
 trả về số hàng bị ảnh hưởng bởi các câu lệnh DML (Data Manipulation Language)<br>
 như INSERT, UPDATE hoặc DELETE.<br>
