@@ -82,7 +82,7 @@ trả về số hàng bị ảnh hưởng bởi các câu lệnh DML (Data Manip
 như INSERT, UPDATE hoặc DELETE.<br>
 Khi bạn thực hiện một trong những câu lệnh này,<br>
 SQL Server mặc định sẽ trả về một thông báo với số lượng hàng bị ảnh hưởng,<br>
-nhưng khi bạn sử dụng SET NOCOUNT ON;,<br>
+nhưng khi bạn sử dụng <code>set nocount on</code>,<br>
 thông báo này sẽ không được trả về.<br>
 
 Việc tắt thông báo số hàng bị ảnh hưởng<br>
