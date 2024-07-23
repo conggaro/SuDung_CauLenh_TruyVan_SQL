@@ -98,3 +98,8 @@ mà bạn có thể cần biết để theo dõi và gỡ lỗi các truy vấn.
 		DATEPART(MINUTE, HOURS_START) as [minute],
 		DATEPART(SECOND, HOURS_START) as [second]
 from	AT_SHIFT;</pre>
+
+<br>
+
+<pre>SELECT FORMAT(HOURS_START, 'HH:mm:ss') AS time_part
+FROM AT_SHIFT;</pre>
