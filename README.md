@@ -92,3 +92,9 @@ hoặc tăng hiệu suất của ứng dụng.<br>
 Tuy nhiên, cũng cần lưu ý rằng việc tắt thông báo này<br>
 có thể làm mất đi thông tin quan trọng<br>
 mà bạn có thể cần biết để theo dõi và gỡ lỗi các truy vấn.<br>
+
+# Lấy ra giờ phút giây
+<pre>select	DATEPART(HOUR, HOURS_START) as [hour],
+		DATEPART(MINUTE, HOURS_START) as [minute],
+		DATEPART(SECOND, HOURS_START) as [second]
+from	AT_SHIFT;</pre>
