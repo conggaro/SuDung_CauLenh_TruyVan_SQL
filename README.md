@@ -103,3 +103,11 @@ from	AT_SHIFT;</pre>
 
 <pre>SELECT FORMAT(HOURS_START, 'HH:mm:ss') AS time_part
 FROM AT_SHIFT;</pre>
+
+# Thêm cột cho bảng có sẵn
+<pre>alter table HU_FAMILY_EDIT
+add TAX_PLACE bigint;</pre>
+
+# Sửa kiểu dữ liệu cho cột
+<pre>alter table HU_FAMILY
+alter column IS_HOUSEHOLD bigint null;</pre>
