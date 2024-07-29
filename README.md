@@ -111,3 +111,8 @@ add TAX_PLACE bigint;</pre>
 # Sửa kiểu dữ liệu cho cột
 <pre>alter table HU_FAMILY
 alter column IS_HOUSEHOLD bigint null;</pre>
+
+# Chèn bản ghi có kiểu dữ liệu DateTime
+<pre>INSERT INTO Events (EventID, EventName, EventDate)
+VALUES (1, 'Conference', '2024-07-29 15:30:00');
+</pre>
