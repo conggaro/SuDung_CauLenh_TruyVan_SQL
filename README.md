@@ -113,6 +113,12 @@ add TAX_PLACE bigint;</pre>
 alter column IS_HOUSEHOLD bigint null;</pre>
 
 # Chèn bản ghi có kiểu dữ liệu DateTime
+<pre>CREATE TABLE Events (
+    EventID INT PRIMARY KEY,
+    EventName NVARCHAR(100),
+    EventDate DATETIME
+);
+</pre>
 <pre>INSERT INTO Events (EventID, EventName, EventDate)
 VALUES (1, 'Conference', '2024-07-29 15:30:00');
 </pre>
