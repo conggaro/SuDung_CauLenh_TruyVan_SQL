@@ -122,3 +122,6 @@ alter column IS_HOUSEHOLD bigint null;</pre>
 <pre>INSERT INTO Events (EventID, EventName, EventDate)
 VALUES (1, 'Conference', '2024-07-29 15:30:00');
 </pre>
+
+# Tạo đối tượng Date ở thời điểm hiện tại
+<pre>let currentDate = new Date();</pre>
