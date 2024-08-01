@@ -125,3 +125,9 @@ VALUES (1, 'Conference', '2024-07-29 15:30:00');
 
 # Tạo đối tượng Date ở thời điểm hiện tại
 <pre>let currentDate = new Date();</pre>
+
+# Lấy ngày, tháng, năm
+<pre>    let current = new Date();
+    let y = current.getFullYear();
+    let m = current.getMonth() + 1;
+    let d = current.getDate();</pre>
