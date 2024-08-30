@@ -123,6 +123,11 @@ alter column IS_HOUSEHOLD bigint null;</pre>
 VALUES (1, 'Conference', '2024-07-29 15:30:00');
 </pre>
 
+# Truy vấn tên cột và kiểu dữ liệu của cột đó
+<pre>SELECT COLUMN_NAME, DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'tên_bảng'</pre>
+
 # Tạo đối tượng Date ở thời điểm hiện tại
 <pre>let currentDate = new Date();</pre>
 
