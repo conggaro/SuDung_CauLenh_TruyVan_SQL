@@ -136,3 +136,22 @@ WHERE TABLE_NAME = 'tên_bảng'</pre>
     let y = current.getFullYear();
     let m = current.getMonth() + 1;
     let d = current.getDate();</pre>
+
+# Đệ quy SQL tìm phòng ban con
+<pre>WITH OrganizationCTE AS
+(
+    -- Điều kiện bắt đầu, tương đương với START WITH trong Oracle
+    SELECT ID, PARENT_ID, [NAME]
+    FROM HU_ORGANIZATION
+    WHERE ID = 1
+    
+    UNION ALL
+    
+    -- Điều kiện đệ quy, tương đương với CONNECT BY trong Oracle
+    SELECT org.ID, org.PARENT_ID, org.[NAME]
+    FROM HU_ORGANIZATION org
+    INNER JOIN OrganizationCTE ec ON org.PARENT_ID = ec.ID
+)
+-- Truy vấn từ CTE đệ quy
+SELECT *
+FROM OrganizationCTE;</pre>
