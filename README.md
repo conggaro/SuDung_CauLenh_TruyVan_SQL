@@ -155,3 +155,12 @@ WHERE TABLE_NAME = 'tên_bảng'</pre>
 -- Truy vấn từ CTE đệ quy
 SELECT *
 FROM OrganizationCTE;</pre>
+
+# Sử dụng "group by"
+<pre>select		b2.[name] as WORK_STATUS_NAME,
+			count(*) as TOTAL
+
+from		HU_EMPLOYEE b1
+left join	SYS_OTHER_LIST b2
+on			b1.WORK_STATUS_ID = b2.ID
+group by	b2.[name]</pre>
