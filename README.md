@@ -179,7 +179,7 @@ on			b1.EMPLOYEE_OBJECT_ID = b3.ID
 group by	b2.[NAME], b3.[NAME];</pre>
 
 # HAVING có thể được sử dụng để lọc các nhóm
-select		b2.[NAME] as WORK_STATUS_NAME,
+<pre>select		b2.[NAME] as WORK_STATUS_NAME,
 			b3.[NAME] as EMPLOYEE_OBJECT_NAME,
 			count(*) as TOTAL
 
@@ -189,4 +189,4 @@ on			b1.WORK_STATUS_ID = b2.ID
 left join	SYS_OTHER_LIST b3
 on			b1.EMPLOYEE_OBJECT_ID = b3.ID
 group by	b2.[NAME], b3.[NAME]
-having		b2.[NAME] = N'Đang làm việc';
+having		b2.[NAME] = N'Đang làm việc';</pre>
