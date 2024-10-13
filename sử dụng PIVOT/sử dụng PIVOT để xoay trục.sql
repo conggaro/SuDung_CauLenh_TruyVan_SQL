@@ -25,6 +25,9 @@ from (
 ) as BangTam
 pivot (min(DiemTB) for MaHocKy in ([HK1], [HK2], [HK3], [HK4])) as BangXoayTruc
 
+-- sắp xếp theo cột TenSV
+order by TenSV desc;
+
 
 
 -- thêm từ khóa "go"
