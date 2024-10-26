@@ -190,3 +190,13 @@ left join	SYS_OTHER_LIST b3
 on			b1.EMPLOYEE_OBJECT_ID = b3.ID
 group by	b2.[NAME], b3.[NAME]
 having		b2.[NAME] = N'Đang làm việc';</pre>
+
+# Phân trang với OFFSET và FETCH NEXT
+<pre>DECLARE @PageNumber INT = 1;
+DECLARE @PageSize INT = 5;
+
+SELECT *
+FROM DanhSach1
+ORDER BY id asc
+OFFSET ((@PageNumber - 1) * @PageSize) ROWS
+FETCH NEXT @PageSize ROWS ONLY;</pre>
