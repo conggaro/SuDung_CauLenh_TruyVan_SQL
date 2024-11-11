@@ -200,3 +200,14 @@ FROM DanhSach1
 ORDER BY id asc
 OFFSET ((@PageNumber - 1) * @PageSize) ROWS
 FETCH NEXT @PageSize ROWS ONLY;</pre>
+
+# Lấy và bỏ qua (giống Take() và Skip() trong C#)
+<pre>SELECT		TOP 10	-- giống take()
+			ROW_NUMBER() OVER (ORDER BY b1.ID) AS ROW_NUM,
+			*
+FROM		(
+			SELECT		*
+			FROM		HU_EMPLOYEE
+			ORDER BY	ID asc
+			OFFSET		10 ROWS	-- giống skip()
+			) as b1;</pre>
