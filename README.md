@@ -226,3 +226,25 @@ from test01
 
 -- sửa tên cột
 EXEC sp_rename 'test01.name', 'name_vn', 'COLUMN';</pre>
+
+# Tạo indexes/Key
+<pre>CREATE TABLE HU_DEBUG (
+    ID BIGINT IDENTITY(1, 1) PRIMARY KEY,
+
+    -- tên đầy đủ là NAME_INTERNATIONALIZATION_CODE
+    NAME_INTL_CODE NVARCHAR(255)
+);
+
+SELECT *
+FROM HU_DEBUG;
+
+-- câu lệnh thêm index
+-- CREATE UNIQUE INDEX [IndexName] ON [TableName] ([Column1], [Column2], ...);
+
+-- hoặc dùng câu lệnh này
+-- CREATE INDEX [IndexName] ON [TableName] ([Column1], [Column2], ...);
+
+
+CREATE UNIQUE INDEX IX_HU_DEBUG_NAME_INTL_CODE ON HU_DEBUG (NAME_INTL_CODE);
+
+DROP TABLE HU_DEBUG;</pre>
