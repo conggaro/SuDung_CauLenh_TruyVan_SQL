@@ -244,7 +244,15 @@ FROM HU_DEBUG;
 -- hoặc dùng câu lệnh này
 -- CREATE INDEX [IndexName] ON [TableName] ([Column1], [Column2], ...);
 
+-- hoặc cách này
+-- CREATE INDEX IX_HU_DEBUG_NAME_INTL_CODE
+-- ON HU_DEBUG (NAME_INTL_CODE ASC, NAME_DEBUG DESC);
+
 
 CREATE UNIQUE INDEX IX_HU_DEBUG_NAME_INTL_CODE ON HU_DEBUG (NAME_INTL_CODE);
+
+-- xóa index
+-- DROP INDEX [IndexName] ON [TableName];
+DROP INDEX IX_HU_DEBUG_NAME_INTL_CODE ON HU_DEBUG;
 
 DROP TABLE HU_DEBUG;</pre>
