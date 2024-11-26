@@ -256,3 +256,52 @@ CREATE UNIQUE INDEX IX_HU_DEBUG_NAME_INTL_CODE ON HU_DEBUG (NAME_INTL_CODE);
 DROP INDEX IX_HU_DEBUG_NAME_INTL_CODE ON HU_DEBUG;
 
 DROP TABLE HU_DEBUG;</pre>
+
+# Câu lệnh select ra danh sách ràng buộc tham chiếu
+<pre>SELECT 
+    fk.name AS ForeignKeyName,
+    tp.name AS ParentTable,
+    cp.name AS ParentColumn,
+    tr.name AS ReferencedTable,
+    cr.name AS ReferencedColumn
+FROM 
+    sys.foreign_keys AS fk
+INNER JOIN 
+    sys.foreign_key_columns AS fkc 
+    ON fk.object_id = fkc.constraint_object_id
+INNER JOIN 
+    sys.tables AS tp 
+    ON fk.parent_object_id = tp.object_id
+INNER JOIN 
+    sys.columns AS cp 
+    ON fkc.parent_object_id = cp.object_id 
+       AND fkc.parent_column_id = cp.column_id
+INNER JOIN 
+    sys.tables AS tr 
+    ON fkc.referenced_object_id = tr.object_id
+INNER JOIN 
+    sys.columns AS cr 
+    ON fkc.referenced_object_id = cr.object_id 
+       AND fkc.referenced_column_id = cr.column_id
+WHERE 
+    tp.name = 'HU_CONTRACT'; -- Thay 'YourTableName' bằng tên bảng bạn muốn kiểm tra</pre>
+
+# Câu lệnh xóa tất cả ràng buộc tham chiếu trong 1 bảng
+<pre>DECLARE @TableName NVARCHAR(MAX) = 'HU_CONTRACT'; -- Tên bảng cần xóa FOREIGN KEYS
+DECLARE @SQL NVARCHAR(MAX);
+
+-- Tìm và tạo lệnh xóa FOREIGN KEYS liên quan đến bảng
+SELECT @SQL = STRING_AGG('ALTER TABLE ' + QUOTENAME(t.name) + 
+                         ' DROP CONSTRAINT ' + QUOTENAME(fk.name), '; ')
+FROM sys.foreign_keys fk
+JOIN sys.tables t ON fk.parent_object_id = t.object_id
+WHERE t.name = @TableName;
+
+-- Thực thi lệnh nếu tìm thấy FOREIGN KEYS
+IF @SQL IS NOT NULL 
+BEGIN
+    PRINT @SQL; -- In ra câu lệnh SQL (nếu cần kiểm tra)
+    EXEC sp_executesql @SQL;
+END
+ELSE
+    PRINT 'No FOREIGN KEYS found for the table ' + @TableName;</pre>
