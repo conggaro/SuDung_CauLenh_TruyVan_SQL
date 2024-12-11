@@ -1,3 +1,7 @@
+# Tính toàn vẹn dữ liệu
+<pre>Tính toàn vẹn dữ liệu (Data Integrity) là khái niệm trong quản lý dữ liệu nhằm đảm bảo rằng dữ liệu là chính xác, đáng tin cậy, và nhất quán trong toàn bộ vòng đời của nó.
+Nó bao gồm các quy trình, quy tắc và cơ chế đảm bảo dữ liệu không bị hỏng hóc, mất mát, hoặc bị thay đổi không mong muốn.</pre>
+
 # Sử dụng câu lệnh truy vấn SQL
 Link học: https://www.youtube.com/watch?v=kQRpe1HkALE&list=PLyxSzL3F7484deka_j1czssCiHygV6oF-
 # Sử dụng hàm
