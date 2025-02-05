@@ -309,3 +309,41 @@ BEGIN
 END
 ELSE
     PRINT 'No FOREIGN KEYS found for the table ' + @TableName;</pre>
+
+# CTE (Common Table Expression) _ đệ quy cây phòng ban
+<pre>WITH DepartmentTree AS (
+    -- Bước 1: Chọn phòng ban gốc (phòng ban cha có Parent_ID = NULL hoặc ID cụ thể)
+    SELECT
+        ID,
+        NAME,
+        PARENT_ID,
+        1 AS LEVEL -- Gốc bắt đầu từ Level 1
+    FROM HU_ORGANIZATION
+    WHERE PARENT_ID IS NULL  
+    -- Hoặc `WHERE ID = @ParentID` nếu có đầu vào cụ thể
+
+    UNION ALL
+
+    -- Bước 2: Đệ quy lấy các phòng ban con
+    SELECT 
+        d.ID, 
+        d.NAME, 
+        d.PARENT_ID, 
+        dt.LEVEL + 1 AS LEVEL -- Level tăng dần
+    FROM HU_ORGANIZATION d
+    INNER JOIN DepartmentTree dt ON d.PARENT_ID = dt.ID
+)
+
+SELECT
+    ID,
+    CASE
+        WHEN LEVEL = 1 THEN NAME
+        ELSE REPLICATE('   ', LEVEL) + NAME
+    end AS name,
+    PARENT_ID,
+    LEVEL
+FROM
+    DepartmentTree
+ORDER BY
+    LEVEL,
+    PARENT_ID;</pre>
