@@ -347,3 +347,19 @@ FROM
 ORDER BY
     LEVEL,
     PARENT_ID;</pre>
+
+# Hàm EXISTS trong SQL Server là gì?
+<pre>Hàm EXISTS trong SQL Server được dùng để kiểm tra sự tồn tại của bản ghi trong một tập kết quả con (subquery).
+
+Nếu có ít nhất một bản ghi trong subquery, EXISTS trả về TRUE.
+Nếu không có bản ghi nào, EXISTS trả về FALSE.
+Nó thường được sử dụng trong câu lệnh WHERE để lọc dữ liệu theo điều kiện.</pre>
+<br>
+<pre>SELECT *
+FROM SinhVien SV
+WHERE EXISTS (
+    SELECT 1
+    FROM KetQua KQ
+    WHERE KQ.MaSV = SV.MaSV
+);
+</pre>
