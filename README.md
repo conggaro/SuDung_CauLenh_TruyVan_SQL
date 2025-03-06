@@ -363,3 +363,7 @@ WHERE EXISTS (
     WHERE KQ.MaSV = SV.MaSV
 );
 </pre>
+
+# Câu lệnh tự động viết số thứ tự (STT)
+<pre>SELECT ROW_NUMBER() OVER (ORDER BY ID ASC) AS STT
+       FROM HU_CONTRACT_TYPE;</pre>
