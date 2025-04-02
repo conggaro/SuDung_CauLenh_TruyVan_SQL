@@ -367,3 +367,36 @@ WHERE EXISTS (
 # Câu lệnh tự động viết số thứ tự (STT)
 <pre>SELECT ROW_NUMBER() OVER (ORDER BY ID ASC) AS STT
        FROM HU_CONTRACT_TYPE;</pre>
+
+# Tạo hàm lấy tất cả phòng ban con từ ID của phòng ban cha
+<pre>CREATE FUNCTION [dbo].[GET_DEPARTMENT_HIERARCHY](
+    @P_ORGID BIGINT
+)
+RETURNS @T TABLE(ORG_ID INT)
+AS
+BEGIN
+    DECLARE @V_CUR AS DATE = CAST(GETDATE() AS DATE);
+
+    -- Khai báo CTE để lấy danh sách phòng ban con
+    WITH CTE_CONNECT_BY AS (
+        SELECT 1 AS LEVEL, S.* 
+        FROM HU_ORGANIZATION S 
+        WHERE ISNULL(S.ID, 1) = ISNULL(@P_ORGID, 1)
+        
+        UNION ALL
+        
+        SELECT LEVEL + 1 AS LEVEL, S.* 
+        FROM CTE_CONNECT_BY R 
+        INNER JOIN HU_ORGANIZATION S ON R.ID = S.PARENT_ID
+    )
+    
+    -- Chèn ID của các phòng ban vào bảng kết quả
+    INSERT INTO @T
+    SELECT C.ID  
+    FROM CTE_CONNECT_BY C
+    WHERE 
+        C.IS_ACTIVE = 1 AND
+        (C.DISSOLVE_DATE IS NULL OR CAST(C.DISSOLVE_DATE AS DATE) <= @V_CUR)
+
+    RETURN
+END</pre>
