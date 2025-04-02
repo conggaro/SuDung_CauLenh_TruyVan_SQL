@@ -446,3 +446,13 @@ END</pre>
 
 <pre>-- câu lệnh chạy thủ tục
 execute INSERT_ORG_IDS_INTO_TEST 1;</pre>
+
+# Vòng lặp trong sql server
+<pre>DECLARE @counter INT = 1;
+DECLARE @max INT = 10;
+
+WHILE @counter <= @max
+BEGIN
+    PRINT @counter; -- Hoặc thực hiện các thao tác khác
+    SET @counter = @counter + 1; -- Tăng biến đếm
+END</pre>
