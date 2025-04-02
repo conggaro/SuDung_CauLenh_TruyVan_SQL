@@ -404,3 +404,45 @@ END</pre>
 cách chạy hàm<br>
 SELECT *
 FROM GET_DEPARTMENT_HIERARCHY(1);
+
+# Tạo thủ tục stored procedure duyệt qua các bản ghi rồi insert vào 1 bảng khác
+<pre>CREATE PROCEDURE dbo.INSERT_ORG_IDS_INTO_TEST
+    @P_ORG_ID BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ORG_ID BIGINT;
+
+    -- Khai báo con trỏ
+    DECLARE org_cursor CURSOR FOR
+    SELECT ID
+    FROM HU_ORGANIZATION
+    WHERE ID IN (
+		SELECT *
+		FROM GET_DEPARTMENT_HIERARCHY(@P_ORG_ID)
+	);
+	
+    -- Mở con trỏ
+    OPEN org_cursor;
+
+    -- Lặp qua các bản ghi
+    FETCH NEXT FROM org_cursor INTO @org_id;
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Chèn ID vào bảng HU_TEST
+        INSERT INTO HU_TEST (ID) VALUES (@org_id);
+
+        -- Lấy bản ghi tiếp theo
+        FETCH NEXT FROM org_cursor INTO @org_id;
+    END
+
+    -- Đóng và giải phóng con trỏ
+    CLOSE org_cursor;
+    DEALLOCATE org_cursor;
+END</pre>
+
+<br>
+
+<pre>-- câu lệnh chạy thủ tục
+execute INSERT_ORG_IDS_INTO_TEST 1;</pre>
