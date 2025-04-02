@@ -400,3 +400,7 @@ BEGIN
 
     RETURN
 END</pre>
+
+cách chạy hàm<br>
+SELECT *
+FROM GET_DEPARTMENT_HIERARCHY(1);
