@@ -456,3 +456,10 @@ BEGIN
     PRINT @counter; -- Hoặc thực hiện các thao tác khác
     SET @counter = @counter + 1; -- Tăng biến đếm
 END</pre>
+
+# Nếu bạn muốn lưu trực tiếp file vào DB
+<pre>CREATE TABLE Files (
+    Id INT PRIMARY KEY IDENTITY,
+    FileName NVARCHAR(255),
+    FileData VARBINARY(MAX)
+);</pre>
