@@ -463,3 +463,32 @@ END</pre>
     FileName NVARCHAR(255),
     FileData VARBINARY(MAX)
 );</pre>
+
+# Con trỏ trong Sql Server
+<pre>DECLARE @EmployeeID INT; -- Biến để lưu trữ giá trị của cột ID
+DECLARE @EmployeeCode NVARCHAR(100); -- Biến để lưu trữ giá trị của cột CODE (giả sử có cột này)
+
+-- Khai báo con trỏ
+DECLARE EmployeeCursor CURSOR FOR
+SELECT ID, CODE
+FROM HU_EMPLOYEE;
+
+-- Mở con trỏ
+OPEN EmployeeCursor;
+
+-- Lấy bản ghi đầu tiên
+FETCH NEXT FROM EmployeeCursor INTO @EmployeeID, @EmployeeCode;
+
+-- Duyệt qua các bản ghi
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    -- In dữ liệu ra màn hình
+    PRINT CAST(@EmployeeID AS NVARCHAR) + ', ' + @EmployeeCode;
+
+    -- Lấy bản ghi tiếp theo
+    FETCH NEXT FROM EmployeeCursor INTO @EmployeeID, @EmployeeCode;
+END;
+
+-- Đóng và giải phóng con trỏ
+CLOSE EmployeeCursor;
+DEALLOCATE EmployeeCursor;</pre>
