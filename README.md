@@ -492,3 +492,14 @@ END;
 -- Đóng và giải phóng con trỏ
 CLOSE EmployeeCursor;
 DEALLOCATE EmployeeCursor;</pre>
+
+# Câu lệnh để xem SEQUENCES
+<pre>SELECT 
+    NAME AS SEQUENCENAME,
+    OBJECT_ID AS SEQUENCEID,
+    START_VALUE,
+    
+    CACHE_SIZE,
+    IS_CYCLING
+FROM 
+    SYS.SEQUENCES;</pre>
