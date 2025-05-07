@@ -503,3 +503,9 @@ DEALLOCATE EmployeeCursor;</pre>
     IS_CYCLING
 FROM 
     SYS.SEQUENCES;</pre>
+
+# Format ngày tháng năm
+<pre>DECLARE @d AS DATE = GETDATE();
+
+SELECT FORMAT(@d, 'dd/MM/yyyy', 'en-US') AS 'Date',
+       FORMAT(123456789, '###-##-####') AS 'Custom Number';</pre>
