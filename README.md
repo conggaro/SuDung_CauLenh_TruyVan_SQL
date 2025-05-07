@@ -509,3 +509,5 @@ FROM
 
 SELECT FORMAT(@d, 'dd/MM/yyyy', 'en-US') AS 'Date',
        FORMAT(123456789, '###-##-####') AS 'Custom Number';</pre>
+
+<pre>SELECT CONVERT(VARCHAR, GETDATE(), 103) AS FormattedDate;</pre>
