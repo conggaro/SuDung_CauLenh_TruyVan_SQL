@@ -517,7 +517,7 @@ SELECT FORMAT(@d, 'dd/MM/yyyy', 'en-US') AS 'Date',
 	E.*,
 	ROW_NUMBER() OVER(
 		PARTITION BY E.EMPLOYEE_ID -- phân loại theo cột nào
-		ORDER BY E.EFFECT_DATE DESC, E.CREATED_DATE DESC -- sắp xếp theo cột nào
+		ORDER BY E.EFFECT_DATE DESC -- sắp xếp theo cột nào
 	) AS [RANK_NUMBER]
 FROM
 	HU_WORKING E
@@ -528,4 +528,7 @@ ORDER BY
 
 Cho bảng hồ sơ lương<br>
 muốn phân loại bản ghi<br>
-muốn đánh số thứ tự cho hồ sơ lương từ mới đến cũ<br>
+muốn đánh số thứ tự cho hồ sơ lương từ mới đến cũ dựa vào cột EFFECT_DATE<br>
+sau đó nhìn vào cột RANK_NUMBER ở kết quả trả về<br>
+nếu bản ghi nào có RANK_NUMBER = 1 thì đấy là hồ sơ lương mới nhất
+
