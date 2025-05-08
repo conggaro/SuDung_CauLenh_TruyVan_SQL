@@ -525,3 +525,7 @@ WHERE
 	EMPLOYEE_ID = 3851
 ORDER BY
 	[RANK_NUMBER] DESC</pre>
+
+Cho bảng hồ sơ lương<br>
+muốn phân loại bản ghi<br>
+muốn đánh số thứ tự cho hồ sơ lương từ mới đến cũ<br>
