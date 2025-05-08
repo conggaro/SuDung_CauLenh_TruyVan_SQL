@@ -532,3 +532,7 @@ muốn đánh số thứ tự cho hồ sơ lương từ mới đến cũ dựa v
 sau đó nhìn vào cột RANK_NUMBER ở kết quả trả về<br>
 nếu bản ghi nào có RANK_NUMBER = 1 thì đấy là hồ sơ lương mới nhất
 
+# Lấy ra kiểu dữ liệu của 1 giá trị bất kỳ (Data type)
+<pre>SELECT SQL_VARIANT_PROPERTY(GETDATE(), 'BaseType') AS DataType;
+SELECT SQL_VARIANT_PROPERTY(1, 'BaseType') AS DataType;
+SELECT SQL_VARIANT_PROPERTY(N'Xin chào', 'BaseType') AS DataType;</pre>
