@@ -511,3 +511,17 @@ SELECT FORMAT(@d, 'dd/MM/yyyy', 'en-US') AS 'Date',
        FORMAT(123456789, '###-##-####') AS 'Custom Number';</pre>
 
 <pre>SELECT CONVERT(VARCHAR, GETDATE(), 103) AS FormattedDate;</pre>
+
+# Đánh số thứ tự cho bản ghi, phân loại bản ghi, xếp hạng bản ghi
+<pre>SELECT
+	E.*,
+	ROW_NUMBER() OVER(
+		PARTITION BY E.EMPLOYEE_ID -- phân loại theo cột nào
+		ORDER BY E.EFFECT_DATE DESC, E.CREATED_DATE DESC -- sắp xếp theo cột nào
+	) AS [RANK_NUMBER]
+FROM
+	HU_WORKING E
+WHERE
+	EMPLOYEE_ID = 3851
+ORDER BY
+	[RANK_NUMBER] DESC</pre>
