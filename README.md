@@ -536,3 +536,7 @@ nếu bản ghi nào có RANK_NUMBER = 1 thì đấy là hồ sơ lương mới 
 <pre>SELECT SQL_VARIANT_PROPERTY(GETDATE(), 'BaseType') AS DataType;
 SELECT SQL_VARIANT_PROPERTY(1, 'BaseType') AS DataType;
 SELECT SQL_VARIANT_PROPERTY(N'Xin chào', 'BaseType') AS DataType;</pre>
+
+# Câu lệnh để xem cấu trúc bảng
+<pre>EXEC VANESA_DODULIEU..sp_help 'HUV_ORGANIZATION';
+-- EXEC tên_data_base..sp_help 'tên_bảng';</pre>
