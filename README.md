@@ -540,3 +540,8 @@ SELECT SQL_VARIANT_PROPERTY(N'Xin chào', 'BaseType') AS DataType;</pre>
 # Câu lệnh để xem cấu trúc bảng
 <pre>EXEC VANESA_DODULIEU..sp_help 'HUV_ORGANIZATION';
 -- EXEC tên_data_base..sp_help 'tên_bảng';</pre>
+
+# Sao chép dữ liệu từ bảng A sang bảng B, nếu chưa có bảng B, câu lệnh này sẽ tự tạo bảng
+<pre>SELECT ID
+INTO TEST_DATA
+FROM HU_ORGANIZATION</pre>
