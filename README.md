@@ -573,3 +573,35 @@ Tóm Tắt
 dbo: Là schema mặc định trong SQL Server, đại diện cho Database Owner.
 Quản Lý: Quản lý các đối tượng như bảng, view, stored procedures, và hàm.
 Cần Sử Dụng: Khi tạo hoặc truy vấn đối tượng thuộc schema này.</pre>
+
+# Cần hàm thì xem cái này
+<pre>-- tạo hàm trả về giá trị
+CREATE FUNCTION GetFullName(@firstName NVARCHAR(50), @lastName NVARCHAR(50))
+RETURNS NVARCHAR(100)
+AS
+BEGIN
+    RETURN @firstName + ' ' + @lastName;
+END
+
+-- gọi hàm
+SELECT dbo.GetFullName('John', 'Doe') AS FullName;
+
+-- xóa hàm
+DROP FUNCTION dbo.GetFullName;
+
+
+
+-- tạo thủ tục (hay gọi là hàm không có giá trị trả về)
+CREATE PROCEDURE dbo.InsertNewUser
+    @firstName NVARCHAR(50),
+    @lastName NVARCHAR(50)
+AS
+BEGIN
+    print N'Bạn đã thêm 1 bản ghi';
+END
+
+-- gọi thủ tục
+execute dbo.InsertNewUser 'tes', '';
+
+-- xóa thủ tục
+DROP PROCEDURE dbo.InsertNewUser;</pre>
