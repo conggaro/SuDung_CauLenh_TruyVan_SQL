@@ -605,3 +605,20 @@ execute dbo.InsertNewUser 'tes', '';
 
 -- xóa thủ tục
 DROP PROCEDURE dbo.InsertNewUser;</pre>
+
+# Hàm trả về 1 list nvarchar(255)
+<pre>CREATE FUNCTION dbo.GetNames()
+RETURNS @NamesTable TABLE (Name NVARCHAR(255))
+AS
+BEGIN
+    INSERT INTO @NamesTable (Name)
+    VALUES ('Alice'), ('Bob'), ('Charlie');
+
+    RETURN;
+END;
+
+
+SELECT * FROM dbo.GetNames();
+
+
+DROP FUNCTION dbo.GetNames;</pre>
