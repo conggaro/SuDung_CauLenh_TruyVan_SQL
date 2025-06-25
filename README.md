@@ -545,3 +545,31 @@ SELECT SQL_VARIANT_PROPERTY(N'Xin chào', 'BaseType') AS DataType;</pre>
 <pre>SELECT ID
 INTO TEST_DATA
 FROM HU_ORGANIZATION</pre>
+
+# Tìm hiểu về dbo trong SQL Server
+<pre>dbo là viết tắt của Database Owner.
+Đây là một trong những schema (lược đồ) mặc định trong SQL Server
+thường được sử dụng để quản lý các đối tượng trong cơ sở dữ liệu.
+
+Quản Lý Những Gì?
+Bảng (Tables): dbo thường chứa các bảng trong cơ sở dữ liệu.
+View: Các view cũng có thể nằm trong schema dbo.
+Stored Procedures: Các thủ tục lưu trữ (stored procedures) thường được định nghĩa trong schema này.
+Hàm (Functions): Các hàm do người dùng tự định nghĩa cũng có thể thuộc dbo.
+Các Đối Tượng Khác: Chẳng hạn như triggers, indexes, và sequences.
+
+Khi Nào Cần Dùng dbo?
+Tạo Đối Tượng: Khi bạn tạo bảng, view, hoặc hàm trong schema dbo.
+
+CREATE TABLE dbo.Users (
+    UserID INT PRIMARY KEY,
+    UserName NVARCHAR(50)
+);
+
+Truy Vấn Đối Tượng: Khi bạn truy vấn hoặc gọi các đối tượng trong schema dbo.
+SELECT * FROM dbo.Users;
+
+Tóm Tắt
+dbo: Là schema mặc định trong SQL Server, đại diện cho Database Owner.
+Quản Lý: Quản lý các đối tượng như bảng, view, stored procedures, và hàm.
+Cần Sử Dụng: Khi tạo hoặc truy vấn đối tượng thuộc schema này.</pre>
