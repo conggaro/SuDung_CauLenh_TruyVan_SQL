@@ -622,3 +622,21 @@ SELECT * FROM dbo.GetNames();
 
 
 DROP FUNCTION dbo.GetNames;</pre>
+
+# Hàm trả về chuỗi kết hợp
+<pre>CREATE FUNCTION dbo.GetNameList()
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @NameList NVARCHAR(MAX);
+    
+    SELECT @NameList = STRING_AGG(Name, ', ')
+    FROM (VALUES ('Alice'), ('Bob'), ('Charlie')) AS Names(Name);
+
+    RETURN @NameList;
+END;
+
+SELECT dbo.GetNameList();
+
+
+DROP FUNCTION dbo.GetNameList;</pre>
