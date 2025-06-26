@@ -640,3 +640,13 @@ SELECT dbo.GetNameList();
 
 
 DROP FUNCTION dbo.GetNameList;</pre>
+
+# Tạo biến để hứng giá trị có kiểu dữ liệu là bảng
+<pre>DECLARE @Result TABLE (Name NVARCHAR(255));
+
+-- Gán giá trị trả về từ hàm vào biến bảng
+INSERT INTO @Result
+SELECT * FROM dbo.GetNames();
+
+-- Truy vấn kết quả
+SELECT * FROM @Result;</pre>
