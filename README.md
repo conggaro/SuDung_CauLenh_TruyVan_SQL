@@ -650,3 +650,8 @@ SELECT * FROM dbo.GetNames();
 
 -- Truy vấn kết quả
 SELECT * FROM @Result;</pre>
+
+# Câu lệnh xem ràng buộc trong 1 bảng (CONSTRAINTS)
+<pre>SELECT INFORMATION
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME='TABLE_NAME';</pre>
