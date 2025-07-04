@@ -652,6 +652,6 @@ SELECT * FROM dbo.GetNames();
 SELECT * FROM @Result;</pre>
 
 # Câu lệnh xem ràng buộc trong 1 bảng (CONSTRAINTS)
-<pre>SELECT INFORMATION
+<pre>SELECT *
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE TABLE_NAME='TABLE_NAME';</pre>
