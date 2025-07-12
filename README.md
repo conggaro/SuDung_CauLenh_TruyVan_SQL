@@ -655,3 +655,9 @@ SELECT * FROM @Result;</pre>
 <pre>SELECT *
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE TABLE_NAME='TABLE_NAME';</pre>
+
+# Tính khoảng thời gian giữa 2 mốc thời gian
+<pre>DECLARE @startDate DATETIME2(7) = '2025-06-20 09:00:00.0000000';
+DECLARE @endDate DATETIME2(7) = '2025-06-20 18:00:00.0000000';
+
+SELECT DATEDIFF(MINUTE, @startDate, @endDate) AS MinutesDifference;</pre>
