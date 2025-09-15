@@ -661,3 +661,8 @@ WHERE TABLE_NAME='TABLE_NAME';</pre>
 DECLARE @endDate DATETIME2(7) = '2025-06-20 18:00:00.0000000';
 
 SELECT DATEDIFF(MINUTE, @startDate, @endDate) AS MinutesDifference;</pre>
+
+# Chuyển string thành list trong SQL Server
+<pre>-- SQL Server 2016+
+SELECT value AS Id
+FROM STRING_SPLIT('1,2,3', ',')</pre>
