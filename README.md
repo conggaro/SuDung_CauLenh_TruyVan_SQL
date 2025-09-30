@@ -750,3 +750,5 @@ WHERE
 
             ELSE 0
         END;</pre>
+<br>
+Bài học rút ra: Những gì viết được trong Select thì có thể bê vào trong Where
