@@ -666,3 +666,87 @@ SELECT DATEDIFF(MINUTE, @startDate, @endDate) AS MinutesDifference;</pre>
 <pre>-- SQL Server 2016+
 SELECT value AS Id
 FROM STRING_SPLIT('1,2,3', ',')</pre>
+
+# Cách sử dụng CASE WHEN
+<pre>-- VIẾT CASE WHEN THEO KIỂU 1
+SELECT
+    CASE 1
+        WHEN 1 THEN 'EQUAL'
+        WHEN 2 THEN 'DIFFERENT'
+        ELSE 'OTHER'
+    END;
+
+DECLARE @parameter1 INT = 999;
+SELECT
+    CASE @parameter1
+        WHEN 1 THEN 'ONE'
+        WHEN 2 THEN 'TWO'
+        ELSE 'OTHER'
+    END;
+
+
+-- VIẾT CASE WHEN THEO KIỂU 2
+SELECT
+    CASE
+        WHEN 1 = 1 THEN 'EQUAL'
+        ELSE 'DIFFERENT'
+    END;
+
+DECLARE @parameter2 INT = 1;
+SELECT
+    CASE
+        WHEN @parameter2 = 1 THEN 'EQUAL'
+        ELSE 'DIFFERENT'
+    END;
+
+
+-- VIẾT CASE WHEN Ở BÊN TRONG WHERE
+DECLARE @parameter_quater INT = 2;
+SELECT
+    FORMAT(EFFECT_DATE, 'dd/MM/yyyy') AS FORMATTED_DATE,
+    CASE
+        WHEN MONTH(EFFECT_DATE) = 1 THEN 1
+        WHEN MONTH(EFFECT_DATE) = 2 THEN 1
+        WHEN MONTH(EFFECT_DATE) = 3 THEN 1
+
+        WHEN MONTH(EFFECT_DATE) = 4 THEN 2
+        WHEN MONTH(EFFECT_DATE) = 5 THEN 2
+        WHEN MONTH(EFFECT_DATE) = 6 THEN 2
+
+        WHEN MONTH(EFFECT_DATE) = 7 THEN 3
+        WHEN MONTH(EFFECT_DATE) = 8 THEN 3
+        WHEN MONTH(EFFECT_DATE) = 9 THEN 3
+
+        WHEN MONTH(EFFECT_DATE) = 10 THEN 4
+        WHEN MONTH(EFFECT_DATE) = 11 THEN 4
+        WHEN MONTH(EFFECT_DATE) = 12 THEN 4
+        
+        ELSE 0
+    END AS QUATER -- QUÝ 1 2 3 4
+FROM
+    HU_WORKING
+WHERE
+    IS_WAGE = -1
+
+    -- LẤY RA CÁC BẢN GHI CÓ QUÝ LỚN HƠN QUÝ 2
+    AND
+        @parameter_quater <
+        CASE
+            WHEN MONTH(EFFECT_DATE) = 1 THEN 1
+            WHEN MONTH(EFFECT_DATE) = 2 THEN 1
+            WHEN MONTH(EFFECT_DATE) = 3 THEN 1
+
+            WHEN MONTH(EFFECT_DATE) = 4 THEN 2
+            WHEN MONTH(EFFECT_DATE) = 5 THEN 2
+            WHEN MONTH(EFFECT_DATE) = 6 THEN 2
+
+            WHEN MONTH(EFFECT_DATE) = 7 THEN 3
+            WHEN MONTH(EFFECT_DATE) = 8 THEN 3
+            WHEN MONTH(EFFECT_DATE) = 9 THEN 3
+
+            WHEN MONTH(EFFECT_DATE) = 10 THEN 4
+            WHEN MONTH(EFFECT_DATE) = 11 THEN 4
+            WHEN MONTH(EFFECT_DATE) = 12 THEN 4
+
+            ELSE 0
+        END;</pre>
