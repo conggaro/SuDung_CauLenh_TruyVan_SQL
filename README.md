@@ -661,6 +661,15 @@ WHERE TABLE_NAME='TABLE_NAME';</pre>
 DECLARE @endDate DATETIME2(7) = '2025-06-20 18:00:00.0000000';
 
 SELECT DATEDIFF(MINUTE, @startDate, @endDate) AS MinutesDifference;</pre>
+<br>
+<pre>DECLARE @date1 DATE = '2023-10-01';
+DECLARE @date2 DATE = '2023-09-25';
+
+DECLARE @daysDiff INT;
+
+SET @daysDiff = DATEDIFF(DAY, @date2, @date1);
+
+SELECT @daysDiff AS DaysDifference; -- Kết quả sẽ là 6</pre>
 
 # Chuyển string thành list trong SQL Server
 <pre>-- SQL Server 2016+
