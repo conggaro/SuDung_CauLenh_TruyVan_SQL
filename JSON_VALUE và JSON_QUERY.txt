@@ -214,3 +214,33 @@ WHERE ProductID = 1;
 DECLARE @jsonString NVARCHAR(MAX) = '{"name": "John", "age": 30}';
 
 SELECT ISJSON(@jsonString) AS IsValidJson;
+
+
+
+
+
+
+-- chuyển dữ liệu sang json
+SELECT
+    FULL_NAME,
+    BIRTH_DATE
+FROM
+    HU_EMPLOYEE_CV
+WHERE
+    FULL_NAME IN (
+        N'TRẦN MINH THANH',
+        N'HOÀNG THANH HẰNG'
+    )
+FOR JSON AUTO;
+
+
+
+
+
+-- chuyển json sang dữ liệu
+SELECT *
+FROM OPENJSON('{"name": "Alice", "age": 30}', '$')
+WITH (
+    Name NVARCHAR(50) '$.name',
+    Age INT '$.age'
+);
