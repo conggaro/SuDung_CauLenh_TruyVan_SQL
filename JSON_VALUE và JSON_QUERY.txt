@@ -1,0 +1,174 @@
+-- cần lấy giá trị là số, là chữ, là bit, là date
+-- thì dùng hàm JSON_VALUE()
+
+-- cần lấy giá trị là object đối tượng, là array mảng
+-- thì dùng hàm JSON_QUERY()
+
+
+
+
+SELECT ATTRIBUTES_JSON
+FROM WF_WORKFLOW_INSTANCE
+WHERE CorrelationId = '2984f8cf-70be-4c11-8669-00f5b42b66bf';
+
+
+
+-- -- KẾT QUẢ TRẢ VỀ
+-- {
+--     "id": null,
+--     "initialRequesterEmployeeId": 30746,
+--     "lockedTimesheetPeriod": 0,
+--     "totalRegisterDays": 1,
+--     "sameRegisterOT": 0,
+--     "sameRegisterLeave": 0,
+--     "sameLateEarly": 0,
+--     "sameRegisterBusinessTrip": 0,
+--     "dateStart": "2025-10-26T01:48:00Z",
+--     "dateEnd": "2025-10-26T01:48:00Z",
+--     "timeTypeId": 78,
+--     "timeTypeAfterId": 78,
+--     "___submitterEmployeeId": 30746,
+--     "___reason": "",
+--     "___submitOnBehalf": false,
+--     "___targetEmployees": null,
+--     "___customCcs": "undefined;nguyen-hong.ngan@sumitomocorp.com;vo-thi-my.phuong@sumitomocorp.com",
+--     "___wys": {
+--         "dateStart___wys": "26/Oct/2025",
+--         "dateEnd___wys": "26/Oct/2025",
+--         "timeTypeId___wys": "WFH",
+--         "timeTypeAfterId___wys": "WFH",
+--         "___submitOnBehalf___wys": "No",
+--         "___submitterEmployeeId___wys": "Bùi Đức Khanh",
+--         "initialRequesterEmployeeId___wys": null,
+--         "___reason___wys": "",
+--         "___targetEmployees___wys": null
+--     },
+--     "isDuplicateApproved": 0,
+--     "countShiftAssignment": 1,
+--     "isDuplicateWaiting": 0
+-- }
+
+
+
+SELECT JSON_VALUE(ATTRIBUTES_JSON, '$.dateEnd') AS DateEnd
+FROM WF_WORKFLOW_INSTANCE
+WHERE CorrelationId = '2984f8cf-70be-4c11-8669-00f5b42b66bf';
+
+
+
+-- nếu muốn truy cập đến thuộc tính timeTypeId___wys
+-- truy vấn thuộc tính ở sâu bên trong 1 object con
+SELECT JSON_VALUE(ATTRIBUTES_JSON, '$.___wys.timeTypeId___wys') AS TimeTypeIdWys
+FROM WF_WORKFLOW_INSTANCE
+WHERE CorrelationId = '2984f8cf-70be-4c11-8669-00f5b42b66bf';
+
+
+
+
+
+
+-- nếu không có bảng
+-- chỉ là 1 biến chứa json có kiểu dữ liệu nvarchar(max)
+-- thì truy vấn ra phần tử có tuổi = 30 như nào
+DECLARE @json NVARCHAR(MAX) = '{
+    "people": [
+        {"name": "John", "age": 25},
+        {"name": "Jane", "age": 30},
+        {"name": "Doe", "age": 30},
+        {"name": "Alice", "age": 35},
+        {"name": "Bob", "age": 28}
+    ]
+}';
+
+
+
+SELECT name, age
+FROM OPENJSON(@json, '$.people')
+WITH (
+    name NVARCHAR(100),
+    age INT
+) AS Person
+WHERE Person.age = 30;
+
+
+
+
+
+
+-- tạo ra bảng JSON_TEST
+-- để lưu json chứa giá trị mảng
+CREATE TABLE JSON_TEST (
+    DATA_JSON NVARCHAR(MAX)
+);
+
+INSERT INTO JSON_TEST (DATA_JSON)
+VALUES ('{
+    "people": [
+        {"name": "John", "age": 25},
+        {"name": "Jane", "age": 30},
+        {"name": "Doe", "age": 30},
+        {"name": "Alice", "age": 35},
+        {"name": "Bob", "age": 28}
+    ]
+}');
+
+SELECT *
+FROM JSON_TEST;
+
+
+
+-- cho 1 cột chứa giá trị json
+-- cột đấy thì ở bên trong bảng JSON_TEST
+-- trường hợp muốn truy vấn phần tử bên trong 1 mảng
+SELECT
+    [name], [age]
+FROM
+    JSON_TEST
+CROSS APPLY
+    OPENJSON(DATA_JSON, '$.people')
+WITH (
+    [name] NVARCHAR(100),
+    [age] INT
+) AS Person
+WHERE Person.age = 30;
+
+
+
+-- xóa bảng
+DROP TABLE JSON_TEST;
+
+
+
+
+
+
+
+
+
+
+
+-- nếu muốn truy cập phần tử có index = 1
+DECLARE @json2 NVARCHAR(MAX) = '{
+    "people": [
+        {"name": "John", "age": 25},
+        {"name": "Jane", "age": 30},
+        {"name": "Doe", "age": 30},
+        {"name": "Alice", "age": 35},
+        {"name": "Bob", "age": 28}
+    ]
+}';
+
+SELECT JSON_VALUE(@json2, '$.people[1].name') AS SecondPersonName,
+       JSON_VALUE(@json2, '$.people[1].age') AS SecondPersonAge;
+
+
+
+
+
+
+-- Hàm JSON_QUERY trong SQL Server
+-- được sử dụng để lấy một đối tượng
+-- hoặc mảng từ một chuỗi JSON. Đây là một hàm hữu ích
+-- khi bạn cần trích xuất các cấu trúc phức tạp từ dữ liệu JSON,
+-- bao gồm cả các đối tượng lồng nhau hoặc các mảng.
+SELECT JSON_QUERY('{"employees": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}' , '$.employees') AS Employees;
