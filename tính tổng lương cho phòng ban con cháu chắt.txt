@@ -1,0 +1,117 @@
+-- tạo biến ListOrgTable để lưu tên phòng ban
+-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+DECLARE @ListOrgTable TABLE (
+    ORG_CODE NVARCHAR(255),            -- Mã phòng ban
+    ORG_NAME NVARCHAR(MAX),            -- Tên phòng ban
+    ORG_ID BIGINT,
+    FullPath NVARCHAR(MAX)
+);
+
+WITH OrganizationCTE AS (
+    SELECT
+        ID,
+        NAME_INTL_CODE,
+        PARENT_ID,
+        CAST(NAME_INTL_CODE AS NVARCHAR(MAX)) AS FullPath,
+        0 AS Level,
+        ORDER_NUM,
+        CODE
+    FROM HU_ORGANIZATION
+    WHERE PARENT_ID IS NULL AND IS_ACTIVE = 1
+
+    UNION ALL
+
+    SELECT
+        o.ID,
+        o.NAME_INTL_CODE,
+        o.PARENT_ID,
+        CAST(CONCAT(c.FullPath, ' -> ', o.NAME_INTL_CODE) AS NVARCHAR(MAX)) AS FullPath,
+        c.Level + 1,
+        o.ORDER_NUM,
+        o.CODE
+    FROM HU_ORGANIZATION o
+    INNER JOIN OrganizationCTE c ON o.PARENT_ID = c.ID
+    WHERE IS_ACTIVE = 1
+)
+
+INSERT INTO @ListOrgTable (ORG_CODE, ORG_NAME, ORG_ID, FullPath)
+SELECT
+    b1.CODE,
+    REPLICATE('    ', Level) + b2.VI AS ORG_NAME,
+    b1.ID AS ORG_ID,
+    b1.FullPath
+FROM OrganizationCTE b1
+INNER JOIN SYS_LANGUAGE b2 ON b1.NAME_INTL_CODE = b2.[KEY]
+WHERE b1.ID IN (
+    SELECT ORG_ID
+    FROM TABLE_ORG_RIGHT('', 1, 0, 1)
+);
+-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+-- biến bảng phòng ban và các con của nó
+DECLARE @org_and_listChildId TABLE
+(
+    ORG_ID BIGINT,
+    LIST_CHILD_ID BIGINT
+);
+
+
+
+-- thêm ID phòng ban
+-- và các ID con cháu chắt của nó
+-- có thể dùng group by để thấy rõ hơn ví dụ này
+INSERT INTO @ORG_AND_LISTCHILDID (ORG_ID, LIST_CHILD_ID)
+SELECT
+    HU_ORGANIZATION.ID AS ID, -- lấy ra ID phòng ban
+    LIST_CHILD.ORG_ID AS LIST_CHILD_ID -- lấy ra list id các phòng ban con cháu chắt của nó
+FROM
+    HU_ORGANIZATION
+CROSS APPLY
+    TABLE_ORG_RIGHT('', HU_ORGANIZATION.ID, 0, 1) LIST_CHILD;
+
+
+
+
+-- code này rất chuẩn
+-- đã kiểm tra kỹ càng
+SELECT
+    TABLE_ORG_NAME.ORG_NAME AS ORG_NAME,
+    ISNULL(SUM_SALARY, 0) AS SUM_SALARY
+FROM
+    -- đây là list tên phòng ban
+    (
+        SELECT
+        *
+        FROM
+            @ListOrgTable
+    ) TABLE_ORG_NAME
+LEFT JOIN
+    -- đây là list phòng ban đã được tính lương xong
+    -- đã tính được hết lương của các nhân viên trong phòng ban con cháu chắt
+    -- mà kh phải sử dụng con trỏ
+    -- tính xong rồi thì chỉ cần join để ghép tên và kết quả
+    (
+        SELECT
+            b1.ORG_ID,
+            
+            -- nó sẽ tính SUM của chính nó và các phòng ban con cháu chắt
+            SUM(ISNULL(b2.SUM1, 0)) SUM_SALARY -- cột khác thì làm tương tự
+        FROM
+            @org_and_listChildId b1
+        LEFT JOIN
+            PA_PAYROLLSHEET_SUM b2
+            ON b2.ORG_ID = b1.LIST_CHILD_ID
+        LEFT JOIN
+            AT_SALARY_PERIOD b3
+            ON b3.ID = b2.PERIOD_ID
+        WHERE
+            b3.[MONTH] = 10
+            AND [YEAR] = 2025
+        GROUP BY
+            b1.ORG_ID
+    ) TABLE_CAL_SALARY
+    ON TABLE_CAL_SALARY.ORG_ID = TABLE_ORG_NAME.ORG_ID
+ORDER BY
+    TABLE_ORG_NAME.FullPath;
