@@ -204,3 +204,13 @@ SELECT @json3;
 UPDATE Products
 SET Details = JSON_MODIFY(Details, '$.price', 19.99)
 WHERE ProductID = 1;
+
+
+
+
+
+
+-- cách sử dụng ISJSON
+DECLARE @jsonString NVARCHAR(MAX) = '{"name": "John", "age": 30}';
+
+SELECT ISJSON(@jsonString) AS IsValidJson;
