@@ -172,3 +172,35 @@ SELECT JSON_VALUE(@json2, '$.people[1].name') AS SecondPersonName,
 -- khi bạn cần trích xuất các cấu trúc phức tạp từ dữ liệu JSON,
 -- bao gồm cả các đối tượng lồng nhau hoặc các mảng.
 SELECT JSON_QUERY('{"employees": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}' , '$.employees') AS Employees;
+
+
+
+
+
+
+
+
+
+
+-- sửa json
+DECLARE @json3 NVARCHAR(MAX) = '{
+    "employees": [
+        {"name": "John", "age": 30},
+        {"name": "Jane", "age": 25}
+    ]
+}';
+
+SET @json3 = JSON_MODIFY(@json3, '$.employees[1].age', 9999);
+
+SELECT @json3;
+
+
+
+
+
+
+-- nếu muốn sửa giá trị cho json
+-- trong cột
+UPDATE Products
+SET Details = JSON_MODIFY(Details, '$.price', 19.99)
+WHERE ProductID = 1;
