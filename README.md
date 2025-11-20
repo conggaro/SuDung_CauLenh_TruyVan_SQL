@@ -761,3 +761,25 @@ WHERE
         END;</pre>
 <br>
 Bài học rút ra: Những gì viết được trong Select thì có thể bê vào trong Where
+
+# Lấy ra tên cột
+<pre>DECLARE @columns NVARCHAR(MAX) = ''
+
+SELECT @columns = STRING_AGG(COLUMN_NAME, ', ')
+FROM
+(
+	SELECT
+		C.COLUMN_NAME
+	FROM
+		INFORMATION_SCHEMA.COLUMNS C
+	WHERE
+		C.TABLE_NAME = 'AT_TIME_TIMESHEET_DAILY'
+		
+		AND C.COLUMN_NAME IN (
+			SELECT C2.COLUMN_NAME
+			FROM INFORMATION_SCHEMA.COLUMNS C2
+			WHERE C2.TABLE_NAME = 'AT_TIME_TIMESHEET_DAILY_TEMP'
+		)
+) AS MatchingColumns;
+
+SELECT @columns;</pre>
