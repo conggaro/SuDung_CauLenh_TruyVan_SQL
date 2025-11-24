@@ -813,3 +813,37 @@ SELECT * FROM TestDateTable;
 
 -- xóa bảng
 DROP TABLE TestDateTable;</pre>
+
+# Kiểu dữ liệu Time
+<pre>-- Tạo bảng có 1 cột kiểu TIME
+CREATE TABLE TestTimeTable (
+    MyTime TIME
+);
+
+
+-- Cách 1: HH:MM:SS (phổ biến nhất)
+INSERT INTO TestTimeTable (MyTime)
+VALUES ('14:30:00');   -- 2:30 chiều
+
+
+-- Cách 2: HH:MM (tự hiểu giây = 00)
+INSERT INTO TestTimeTable (MyTime)
+VALUES ('09:15');
+
+
+-- Cách 3: HH:MM:SS.mmm (có mili-second)
+INSERT INTO TestTimeTable (MyTime)
+VALUES ('18:45:30.123');
+
+
+-- Cách 4: CONVERT TIME
+INSERT INTO TestTimeTable (MyTime)
+VALUES (CONVERT(TIME, '14:30:00'));
+
+
+-- Kiểm tra
+SELECT * FROM TestTimeTable;
+
+
+-- xóa bảng
+DROP TABLE TestTimeTable;</pre>
