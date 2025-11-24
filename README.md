@@ -783,3 +783,33 @@ FROM
 ) AS MatchingColumns;
 
 SELECT @columns;</pre>
+
+# Kiểu dữ liệu Date
+<pre>-- Tạo bảng có 1 cột kiểu DATE
+CREATE TABLE TestDateTable (
+    MyDate DATE
+);
+
+
+-- Cách 1: dạng yyyy-mm-dd (khuyến nghị – chuẩn ISO 8601)
+INSERT INTO TestDateTable (MyDate)
+VALUES ('2025-10-01');
+
+
+-- Cách 2: dạng dd/mm/yyyy (chỉ khi DATEFORMAT phù hợp)
+SET DATEFORMAT dmy;
+INSERT INTO TestDateTable (MyDate)
+VALUES ('01/10/2025');
+
+
+-- Cách 3: dùng CONVERT
+INSERT INTO TestDateTable (MyDate)
+VALUES (CONVERT(DATE, '01/10/2025', 103));  -- 103 = dd/mm/yyyy
+
+
+-- Kiểm tra dữ liệu
+SELECT * FROM TestDateTable;
+
+
+-- xóa bảng
+DROP TABLE TestDateTable;</pre>
