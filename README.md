@@ -847,3 +847,48 @@ SELECT * FROM TestTimeTable;
 
 -- xóa bảng
 DROP TABLE TestTimeTable;</pre>
+
+# Clone bảng phát 1
+<pre>-- tạo bảng chính
+CREATE TABLE TEST_TABLE(
+    TEST_VALUE INT
+);
+
+
+-- thêm dữ liệu
+INSERT INTO TEST_TABLE(TEST_VALUE)
+VALUES (1), (2), (3), (4), (5);
+
+
+-- lấy ra xem thử TEST_TABLE
+select *
+from TEST_TABLE;
+
+
+-- kiểm tra xem bảng 
+IF OBJECT_ID('tempdb..#TEST_TABLE') IS NOT NULL
+BEGIN
+    DROP TABLE #TEST_TABLE;
+END;
+
+
+-- clone bảng phát 1
+SELECT T.*
+INTO #TEST_TABLE
+FROM TEST_TABLE T
+
+
+-- lấy ra xem thử #TEST_TABLE
+select *
+from #TEST_TABLE;
+
+
+-- thử câu lệnh update mới lạ
+UPDATE T
+SET TEST_VALUE =  999
+FROM TEST_TABLE T
+WHERE TEST_VALUE = 1;
+
+
+-- xóa bảng
+DROP TABLE TEST_TABLE;</pre>
