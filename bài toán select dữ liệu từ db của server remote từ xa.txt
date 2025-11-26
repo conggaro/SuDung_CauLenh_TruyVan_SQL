@@ -1,0 +1,32 @@
+-- nếu muốn tạo kết nối đến 1 server khác
+-- phải kiểm tra:
+-- tài khoản "sa" có đang hoạt động không
+-- kiểm tra đã đúng mật khẩu của tài khoản "sa" chưa
+-- kiểm tra có chặn tường lửa không (nếu có chặn thì tắt tường lửa đi)
+EXEC sp_addlinkedserver 
+    @server = 'LOCALHOST_NAME_CUSTOMIZE',  -- Tên của linked server
+    @srvproduct = '', 
+    @provider = 'SQLNCLI', 
+    @datasrc = '192.168.60.22\SQLSERVER2099';    -- Hoặc tên máy cục bộ của bạn
+
+
+EXEC sp_addlinkedsrvlogin 
+    @rmtsrvname = 'LOCALHOST_NAME_CUSTOMIZE', 
+    @useself = 'false', 
+    @locallogin = NULL,         -- Hoặc có thể bỏ qua nếu không ánh xạ
+    @rmtuser = 'sa',            -- Tài khoản trên server local
+    @rmtpassword = 'mật_khẩu'; -- Mật khẩu của tài khoản
+
+
+-- Xóa Linked Server
+EXEC sp_dropserver 'LOCALHOST_NAME_CUSTOMIZE', 'droplogins'; -- 'droplogins' sẽ xóa thông tin đăng nhập liên quan
+
+
+-- truy vấn
+SELECT * 
+FROM LOCALHOST_NAME_CUSTOMIZE.NTT_UAT.dbo.SYS_OTHER_LIST_TYPE;
+
+
+-- cú pháp
+select *
+from tên_linked_server.tên_data_base.dbo.tên_bảng
