@@ -1,0 +1,27 @@
+-- cú pháp để lấy ra bảng theo Data Base
+-- TÊN_DATABASE.dbo.TÊN_BẢNG_CẦN_TRUY_CẬP
+
+INSERT INTO NTT_UAT.dbo.SYS_OTHER_LIST ( -- bảng đích đến
+	[TYPE_ID],
+	CODE,
+	[NAME],
+	NAME_INTL_CODE,
+	USER_CANNOT_EDIT,
+	ORDERS,
+	IS_ACTIVE
+)
+SELECT
+	[TYPE_ID],
+	CODE,
+	[NAME],
+	NAME_INTL_CODE,
+	USER_CANNOT_EDIT,
+	ORDERS,
+	IS_ACTIVE
+FROM
+	NTT_LIVE.dbo.SYS_OTHER_LIST -- bảng chứa dữ liệu nguồn cần lấy
+WHERE [TYPE_ID] IN (
+	SELECT ID
+	FROM NTT_LIVE.dbo.SYS_OTHER_LIST_TYPE
+	WHERE CODE = 'CERTIFICATE_TYPE'
+)
