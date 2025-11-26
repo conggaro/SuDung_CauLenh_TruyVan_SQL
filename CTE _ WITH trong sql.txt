@@ -1,0 +1,47 @@
+DECLARE @month int = 11;
+DECLARE @year int = 2025;
+DECLARE @employeeCode nvarchar(255) = 'EMP2695';
+
+WITH
+    CTE1 AS (
+        -- Truy vấn cho CTE1
+        SELECT *
+        FROM AT_WORKSIGN
+        WHERE
+            MONTH(WORKINGDAY) = @month
+            AND YEAR(WORKINGDAY) = @year
+    ),
+    CTE2 AS (
+        -- Truy vấn cho CTE2
+        SELECT *
+        FROM AT_SHIFT
+    ),
+    CTE3 AS (
+        -- Truy vấn cho CTE3
+        SELECT *
+        FROM AT_SYMBOL
+    ),
+    CTE4 AS (
+        -- Truy vấn cho CTE4
+        SELECT *
+        FROM HU_EMPLOYEE
+        WHERE CODE = @employeeCode
+    )
+
+-- Truy vấn chính sử dụng CTEs
+SELECT
+    FORMAT(CTE1.WORKINGDAY, 'dd/MM/yyyy') AS N'Ngày làm việc',
+    CTE2.CODE AS N'Mã ca làm việc',
+    CTE3.CODE AS N'Mã của loại công',
+    CTE4.ID AS EMPLOYEE_ID
+FROM
+    CTE1
+LEFT JOIN
+    CTE2
+    ON CTE1.SHIFT_ID = CTE2.ID
+LEFT JOIN
+    CTE3
+    ON CTE2.SYMBOL_ID = CTE3.ID
+INNER JOIN
+    CTE4
+    ON CTE1.EMPLOYEE_ID = CTE4.ID;
