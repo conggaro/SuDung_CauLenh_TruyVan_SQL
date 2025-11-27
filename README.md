@@ -892,3 +892,5 @@ WHERE TEST_VALUE = 1;
 
 -- xóa bảng
 DROP TABLE TEST_TABLE;</pre>
+
+# Linked Server thì tìm trong git này với từ khóa remote từ xa
