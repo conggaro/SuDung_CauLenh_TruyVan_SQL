@@ -894,3 +894,19 @@ WHERE TEST_VALUE = 1;
 DROP TABLE TEST_TABLE;</pre>
 
 # Linked Server thì tìm trong git này với từ khóa remote từ xa
+
+# Lấy ra ngày đầu tháng và ngày cuối tháng
+<pre>DECLARE @month INT = 11;  -- Tháng (ví dụ: tháng 11)
+DECLARE @year INT = 2025; -- Năm (ví dụ: năm 2025)
+
+SELECT 
+    convert(date, DATEADD(MONTH, @month - 1, DATEADD(YEAR, @year - 1900, 0))) AS FirstDayOfMonth,
+    EOMONTH(DATEADD(MONTH, @month - 1, DATEADD(YEAR, @year - 1900, 0))) AS LastDayOfMonth;</pre>
+<br>
+cách 2:
+<br>
+<pre>DECLARE @inputDate DATE = '2025-11-26'; -- Ngày cụ thể
+
+SELECT 
+    convert(date, DATEADD(MONTH, DATEDIFF(MONTH, 0, @inputDate), 0)) AS FirstDayOfMonth,
+    EOMONTH(@inputDate) AS LastDayOfMonth;</pre>
