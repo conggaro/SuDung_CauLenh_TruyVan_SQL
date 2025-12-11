@@ -1,0 +1,2 @@
+SELECT REPLACE('Hello World', 'World', 'SQL') AS ModifiedString;
+-- Result: 'Hello SQL'
