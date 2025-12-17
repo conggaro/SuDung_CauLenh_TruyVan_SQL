@@ -1,0 +1,35 @@
+
+CREATE SEQUENCE [dbo].[SEQ_CUSTOMIZE_REQUEST]
+    AS BIGINT           -- Kiểu dữ liệu số nguyên lớn (thoải mái cho hàng tỷ request)
+    START WITH 1        -- Bắt đầu từ số 1
+    INCREMENT BY 1      -- Mỗi lần gọi sẽ tăng thêm 1 đơn vị
+    MINVALUE 1          -- Giá trị nhỏ nhất là 1
+    NO MAXVALUE         -- Không giới hạn giá trị tối đa (hoặc dùng MAXVALUE 999999999999)
+    CACHE 20;           -- Lưu trước 20 số vào bộ nhớ đệm để tăng tốc độ xử lý
+GO
+
+-- Chú thích: 
+-- Sau khi chạy lệnh này, bạn có thể kiểm tra bằng cách chạy:
+-- SELECT NEXT VALUE FOR [dbo].[SEQ_CUSTOMIZE_REQUEST];
+SELECT NEXT VALUE FOR [dbo].[SEQ_CUSTOMIZE_REQUEST];
+
+
+
+-- câu lệnh xóa
+DROP SEQUENCE IF EXISTS [dbo].[SEQ_CUSTOMIZE_REQUEST];
+GO
+
+
+
+
+-- xóa cách 2
+IF EXISTS (SELECT * FROM sys.sequences WHERE name = 'SEQ_CUSTOMIZE_REQUEST')
+BEGIN
+    DROP SEQUENCE [dbo].[SEQ_CUSTOMIZE_REQUEST];
+    PRINT 'Đã xóa thành công Sequence SEQ_CUSTOMIZE_REQUEST';
+END
+ELSE
+BEGIN
+    PRINT 'Sequence không tồn tại, không cần xóa.';
+END
+GO
