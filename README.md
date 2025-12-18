@@ -910,3 +910,18 @@ cách 2:
 SELECT 
     convert(date, DATEADD(MONTH, DATEDIFF(MONTH, 0, @inputDate), 0)) AS FirstDayOfMonth,
     EOMONTH(@inputDate) AS LastDayOfMonth;</pre>
+
+# Chọn lọc dữ liệu theo ý thích trong hàm MAX() được luôn
+<pre>SELECT
+	MAX(
+		CASE
+			WHEN HP.CODE = 'J1317' THEN HW.POSITION_ID
+		END
+	)
+FROM
+	HU_WORKING AS HW
+LEFT JOIN
+	HU_POSITION AS HP
+	ON HW.POSITION_ID = HP.ID
+GROUP BY
+	HW.EMPLOYEE_ID</pre>
