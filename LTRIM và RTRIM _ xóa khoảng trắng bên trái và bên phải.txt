@@ -1,0 +1,6 @@
+DECLARE @String NVARCHAR(50) = '   SUMITOMO';
+SELECT LTRIM(@String) AS Result;
+
+
+DECLARE @String NVARCHAR(50) = 'SUMITOMO   ';
+SELECT RTRIM(@String) + ' VN' AS Result;
