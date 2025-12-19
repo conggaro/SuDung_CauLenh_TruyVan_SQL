@@ -1,0 +1,14 @@
+DECLARE @code NVARCHAR(20) = 'P/HC';
+
+SELECT SUBSTRING(@code, 1, CHARINDEX('/', @code) - 1) AS LeftPart;
+-- Kết quả trả về: 'P'
+
+
+
+
+SUBSTRING ( chuỗi_nguồn, vị_trí_bắt_đầu, độ_dài )
+Chuỗi_nguồn: Chuỗi gốc hoặc tên cột chứa dữ liệu.
+
+Vị_trí_bắt_đầu: Số thứ tự của ký tự đầu tiên bạn muốn lấy (nhớ rằng SQL bắt đầu từ 1).
+
+Độ_dài: Bạn muốn lấy bao nhiêu ký tự tính từ vị trí bắt đầu.
