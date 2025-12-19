@@ -1,0 +1,29 @@
+Hàm NULLIF trong SQL Server là một hàm điều kiện dùng để trả về giá trị NULL nếu hai tham số truyền vào bằng nhau. Nếu chúng không bằng nhau, nó sẽ trả về giá trị của tham số thứ nhất.
+
+Đây là một "mẹo" rất hay được các lập trình viên SQL dùng để xử lý các lỗi logic hoặc làm sạch dữ liệu.
+
+
+1. Cấu trúc (Syntax)
+SQL
+
+NULLIF ( bieu_thuc_1 , bieu_thuc_2 )
+Nếu bieu_thuc_1 = bieu_thuc_2: Kết quả là NULL.
+
+Nếu bieu_thuc_1 != bieu_thuc_2: Kết quả là bieu_thuc_1.
+
+2. Hai ứng dụng quan trọng nhất (Tại sao lại dùng nó?)
+A. Chống lỗi "Chia cho 0" (Division by zero) - Cực kỳ phổ biến
+Trong các công thức tính toán (như tính tỷ lệ phần trăm công, hiệu suất), nếu mẫu số bằng 0, SQL sẽ báo lỗi và dừng toàn bộ tiến trình. NULLIF sẽ giải quyết việc này:
+
+
+
+
+ví dụ
+-- kiểm tra xem tồn tại bản ghi
+-- có code = 'A02806' không
+SELECT
+	NULLIF(CODE, 'A02806')
+FROM
+	HU_EMPLOYEE
+WHERE
+	NULLIF(CODE, 'A02806') IS NULL
