@@ -1,0 +1,34 @@
+SELECT
+	CHARINDEX('N', FULL_NAME, 1),
+	FULL_NAME
+FROM HU_EMPLOYEE_CV;
+
+
+Trong SQL Server, chỉ số (index) của chuỗi bắt đầu từ 1, không phải từ 0 như các ngôn ngữ lập trình C#, Java, hay Python.
+
+
+Hàm CHARINDEX trong SQL Server là hàm dùng để tìm kiếm vị trí bắt đầu của một chuỗi con bên trong một chuỗi khác.
+
+
+CHARINDEX ( chuỗi_cần_tìm , chuỗi_nguồn [ , vị_trí_bắt_đầu ] )
+
+
+
+
+
+1. Cấu trúc (Syntax)
+SQL
+
+CHARINDEX ( chuỗi_cần_tìm , chuỗi_nguồn [ , vị_trí_bắt_đầu ] )
+Chuỗi cần tìm: Cái bạn muốn kiểm tra (ví dụ: 'P').
+
+Chuỗi nguồn: Nơi bạn tìm (ví dụ cột: MERGED_CODE).
+
+Vị trí bắt đầu (tùy chọn): Bắt đầu tìm từ ký tự thứ mấy (mặc định là từ đầu).
+
+2. Kết quả trả về
+Trả về số nguyên (vị trí của ký tự đầu tiên tìm thấy).
+
+Nếu không tìm thấy, nó trả về 0.
+
+Lưu ý: Trong SQL, vị trí bắt đầu tính từ 1 (không phải từ 0 như các ngôn ngữ lập trình khác).
