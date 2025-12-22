@@ -1,0 +1,52 @@
+declare @PV_STATUS_DD bigint;
+
+select @PV_STATUS_DD = ID
+from SYS_OTHER_LIST
+where code = 'DD';
+
+declare @PV_FROMDATE date = '2025-12-01';
+declare @PV_TODATE date = '2025-12-31';
+
+
+
+
+SELECT
+    E.*
+FROM (
+    -- 1. LẤY RA HỒ SƠ LƯƠNG CŨ
+    SELECT
+        W.*,
+        ROW_NUMBER() OVER(
+            PARTITION BY W.EMPLOYEE_ID
+            ORDER BY W.EFFECT_DATE DESC, W.SIGN_DATE DESC, W.ID DESC
+        ) AS RN
+    FROM
+		HU_WORKING W
+	WHERE
+		W.STATUS_ID = @PV_STATUS_DD
+
+		-- lấy ra các bản ghi có 01/12/2025 lớn hơn ngày hiệu lực của hồ sơ lương
+		-- nếu @PV_FROMDATE lớn hơn W.EFFECT_DATE
+		-- thì nó sẽ trả về 1 2 3...
+		AND DATEDIFF(DAY, W.EFFECT_DATE, @PV_FROMDATE) >= 0
+) E
+WHERE E.RN = 1
+
+UNION ALL
+
+-- 2. LẤY RA HỒ SƠ LƯƠNG MỚI
+SELECT	
+    W.*,
+    ROW_NUMBER() OVER(
+        PARTITION BY W.EMPLOYEE_ID 
+        ORDER BY W.EFFECT_DATE DESC, W.SIGN_DATE DESC, W.ID DESC
+    ) AS RN
+FROM HU_WORKING W
+WHERE W.STATUS_ID = @PV_STATUS_DD
+	-- muốn lấy ngày hiệu lực hồ sơ lương
+	-- lớn hơn 01/12/2025
+	AND DATEDIFF(DAY, @PV_FROMDATE, W.EFFECT_DATE) > 0
+	
+	-- muốn lấy ngày hiệu lực hồ sơ lương
+	-- nhỏ hơn @PV_TODATE
+	AND DATEDIFF(DAY, W.EFFECT_DATE, @PV_TODATE) >= 0;
