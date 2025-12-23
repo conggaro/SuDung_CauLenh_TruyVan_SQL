@@ -1,0 +1,143 @@
+-- 1. Khai báo các biến ngày tháng
+DECLARE @PV_FROMDATE DATETIME = '2025-12-01'; -- Ngày bắt đầu kỳ (Ví dụ)
+DECLARE @PV_TODATE DATETIME = '2025-12-31';   -- Ngày kết thúc kỳ (Ví dụ)
+
+-- 2. Khai báo biến người dùng và ID yêu cầu
+DECLARE @PV_USERNAME NVARCHAR(50) = 'ADMIN';  -- Tên người thực hiện
+
+DECLARE @PV_REQUEST_ID FLOAT; -- ID phiên làm việc
+SET @PV_REQUEST_ID = NEXT VALUE FOR SEQ_AT_REQUEST;
+
+-- 3. Khai báo biến trạng thái (thường dùng trong lọc HU_WORKING)
+DECLARE @PV_STATUS_DD INT = 994;               -- Mã trạng thái phê duyệt (Approved)
+
+SELECT 
+    EMPLOYEE_ID, ORG_ID, POSITION_ID, WORKINGDAY, SHIFT_CODE, LEAVE_CODE, LATE, COMEBACKOUT, MANUAL_CODE, MANUAL_ID, SHIFT_ID, WORKINGHOUR_SHIFT, OT_WEEKDAY, OT_WEEKNIGHT, OT_OFF, OT_OFF_NIGHT, OT_HOLIDAY, OT_HOLIDAY_NIGHT, OT_TOTAL_CONVERT, PA_OBJECT_SALARY_ID AS PA_EMPLOYEE_OBJECT_ID, IS_HOLIDAY, TYPE_LEAVE, WORKINGHOUR, @PV_USERNAME AS CREATED_LOG, @PV_REQUEST_ID, @PV_FROMDATE, @PV_TODATE, OT_WEEKDAYNIGTH, LEAVE_REASON_DETAIL, WAGE_ID, LEAVE_PER_WORK, LATE_P, COMEBACKOUT_P, MINUTE_DM_DK, MINUTE_VS_DK, OT_OUTSITE, WORKING_HOUR_BT, OT_COMPANY_NIGHT, OT_COMPANY_DAY
+FROM (
+    SELECT  
+        T.EMPLOYEE_ID,
+        T.ORG_ID,
+        T.POSITION_ID,
+        T.WORKINGDAY,
+        SHIFT_CODE,
+        LEAVE_CODE,
+        T.LATE,
+        T.COMEBACKOUT,
+        M.CODE AS MANUAL_CODE,
+        T.MANUAL_ID,
+        SHIFT_ID,
+        SH.IS_NIGHT,
+        WORKINGHOUR_SHIFT,
+        T.OT_WEEKDAY, 
+        T.OT_WEEKNIGHT + T.OT_WEEKDAYNIGTH AS OT_WEEKNIGHT, 
+        T.OT_OFF, 
+        T.OT_OFF_NIGHT, 
+        T.OT_HOLIDAY, 
+        T.OT_HOLIDAY_NIGHT,
+        T.OT_TOTAL_CONVERT,
+        EE.PA_OBJECT_SALARY_ID,
+        T.IS_HOLIDAY,
+        T.TYPE_LEAVE,
+        T.WORKINGHOUR,
+        T.OT_WEEKDAYNIGTH,
+        T.LEAVE_REASON_DETAIL,
+        WORKING.ID AS WAGE_ID,
+        T.LEAVE_PER_WORK,
+        T.LATE_P,
+        T.COMEBACKOUT_P,
+        T.MINUTE_DM_DK,
+        T.MINUTE_VS_DK,
+        T.OT_OUTSITE,
+        T.WORKING_HOUR_BT,
+        T.OT_COMPANY_NIGHT,
+        T.OT_COMPANY_DAY
+    FROM AT_CHOSEN_EMP EE
+    INNER JOIN AT_TIME_TIMESHEET_DAILY T
+        ON T.EMPLOYEE_ID = EE.EMPLOYEE_ID
+        AND DATEDIFF(DAY, @PV_FROMDATE, T.WORKINGDAY) >= 0
+        AND DATEDIFF(DAY, T.WORKINGDAY, @PV_TODATE) >= 0
+    LEFT JOIN AT_SYMBOL M
+        ON ISNULL(M.ID, 0) = ISNULL(T.MANUAL_ID, 0)
+    LEFT JOIN AT_SHIFT SH 
+        ON SH.ID = T.SHIFT_ID
+    LEFT JOIN (
+        /* --- BẢNG WORKING: TÍNH TOÁN TIMELINE QUÁ TRÌNH LÀM VIỆC --- */
+        SELECT 
+            T.ORG_ID,
+            T.POSITION_ID,
+            T.EMPLOYEE_ID,
+            T.ID,
+            T.START_DATE,
+            T.STAFF_RANK_ID,
+            T.PERCENT_SALARY,
+            
+            -- lấy START_DATE của bản ghi phía trước trừ đi 1 rồi gán cho END_DATE
+            -- nếu bị NULL thì lấy @PV_TODATE
+            -- tức là 31/12/2025 luôn
+            -- PARTITION BY EMPLOYEE_ID để đảm bảo xử lý theo đúng người
+            ISNULL(
+                LAG(DATEADD(DAY, -1, T.START_DATE)) OVER (
+                    PARTITION BY T.EMPLOYEE_ID 
+                    ORDER BY T.START_DATE DESC, T.ID DESC
+                ), 
+                @PV_TODATE
+            ) AS END_DATE,
+
+            T.TYPE_ID
+        FROM (
+            -- 1. hồ sơ lương cũ
+            SELECT E.*
+            FROM (
+                SELECT  
+                    W.ORG_ID,
+                    W.EMPLOYEE_ID,
+                    W.ID,
+                    W.POSITION_ID,
+                    W.SALARY_LEVEL_ID AS STAFF_RANK_ID,
+                    CASE 
+                        WHEN FORMAT(E.JOIN_DATE, 'yyyyMM') = FORMAT(@PV_FROMDATE, 'yyyyMM') THEN @PV_FROMDATE
+                        ELSE W.EFFECT_DATE 
+                    END AS START_DATE,
+                    ISNULL(W.SAL_PERCENT, 0) AS PERCENT_SALARY,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY W.EMPLOYEE_ID 
+                        ORDER BY W.EFFECT_DATE DESC, W.SIGN_DATE DESC, W.ID DESC
+                    ) AS RN,
+                    W.TYPE_ID
+                FROM HU_WORKING W
+                INNER JOIN HU_EMPLOYEE E ON E.ID = W.EMPLOYEE_ID
+                WHERE W.STATUS_ID = 994 -- thường 994 là ID của đã phê duyệt
+                    AND DATEDIFF(DAY, W.EFFECT_DATE, @PV_FROMDATE) >= 0
+            ) E
+            WHERE E.RN = 1 
+
+            UNION ALL
+
+            -- 2. hồ sơ lương mới
+            SELECT * FROM (
+                SELECT 
+                    W.ORG_ID,
+                    W.EMPLOYEE_ID,
+                    W.ID,
+                    W.POSITION_ID,
+                    W.SALARY_LEVEL_ID AS STAFF_RANK_ID,
+                    W.EFFECT_DATE,
+                    ISNULL(W.SAL_PERCENT, 0) AS PERCENT_SALARY,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY W.EMPLOYEE_ID 
+                        ORDER BY W.EFFECT_DATE DESC, W.SIGN_DATE DESC, W.ID DESC
+                    ) AS RN,
+                    W.TYPE_ID
+                FROM HU_WORKING W
+                WHERE W.STATUS_ID = 994
+                    AND DATEDIFF(DAY, @PV_FROMDATE, W.EFFECT_DATE) > 0
+                    AND DATEDIFF(DAY, W.EFFECT_DATE, @PV_TODATE) >= 0
+            ) F 
+            WHERE F.RN = 1
+        ) AS T 
+    ) WORKING 
+        ON WORKING.EMPLOYEE_ID = EE.EMPLOYEE_ID
+        AND DATEDIFF(DAY, WORKING.START_DATE, T.WORKINGDAY) >= 0 
+        AND DATEDIFF(DAY, T.WORKINGDAY, WORKING.END_DATE) >= 0 
+    WHERE EE.REQUEST_ID = @PV_REQUEST_ID
+) A;
