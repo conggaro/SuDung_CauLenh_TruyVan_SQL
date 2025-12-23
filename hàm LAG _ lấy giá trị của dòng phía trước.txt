@@ -1,0 +1,32 @@
+lấy ra EFFECT_DATE
+của bản ghi phía trước (cái này cơ bản)
+
+
+SELECT
+    ID,
+    EFFECT_DATE,
+    LAG(EFFECT_DATE) OVER (ORDER BY ID DESC) AS PREV_EFFECT_DATE
+FROM HU_WORKING;
+
+
+
+Đoạn SQL này dùng hàm LAG() để lấy ngày EFFECT_DATE của hàng phía trước (theo thứ tự ID giảm dần) và hiển thị nó trong cột mới.
+
+
+
+1. FROM HU_WORKING
+Lấy dữ liệu từ bảng HU_WORKING
+
+2. ORDER BY ID DESC
+Sắp xếp dữ liệu theo ID giảm dần
+Hàng có ID lớn hơn được xem là đứng trước
+=> “Hàng phía trước” ở đây = hàng có ID lớn hơn
+
+3. LAG(EFFECT_DATE)
+Lấy giá trị EFFECT_DATE của hàng đứng ngay trước
+Dựa trên thứ tự đã xác định ở ORDER BY ID DESC
+
+4. AS PREV_EFFECT_DATE
+Đặt tên cột mới là PREV_EFFECT_DATE
+Hiển thị ngày hiệu lực của hàng trước đó
+
