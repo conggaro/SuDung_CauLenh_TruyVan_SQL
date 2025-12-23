@@ -1,0 +1,8 @@
+SELECT
+    ID,
+    EFFECT_DATE,
+    LEAD(EFFECT_DATE) OVER (ORDER BY ID) AS NEXT_EFFECT_DATE
+FROM HU_WORKING;
+
+
+hàm LAG thì lấy giá trị phía trước, còn hàm LEAD thì lấy giá trị ở hàng sau
