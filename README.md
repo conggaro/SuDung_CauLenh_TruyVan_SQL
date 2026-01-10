@@ -133,14 +133,19 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'tên_bảng'</pre>
 <br>
 <pre>SELECT
+    TABLE_SCHEMA,
+    TABLE_NAME,
     COLUMN_NAME,
     DATA_TYPE,
-    TABLE_NAME
+    CHARACTER_MAXIMUM_LENGTH,
+    NUMERIC_PRECISION,
+    NUMERIC_SCALE,
+    DATETIME_PRECISION
 FROM
     INFORMATION_SCHEMA.COLUMNS
 WHERE
     TABLE_SCHEMA = 'OM'
-    AND TABLE_NAME = 'DOM_R_CODE';</pre>
+    AND TABLE_NAME = 'DOM_P_S';</pre>
 
 # Tạo đối tượng Date ở thời điểm hiện tại
 <pre>let currentDate = new Date();</pre>
