@@ -131,6 +131,16 @@ VALUES (1, 'Conference', '2024-07-29 15:30:00');
 <pre>SELECT COLUMN_NAME, DATA_TYPE
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'tên_bảng'</pre>
+<br>
+<pre>SELECT
+    COLUMN_NAME,
+    DATA_TYPE,
+    TABLE_NAME
+FROM
+    INFORMATION_SCHEMA.COLUMNS
+WHERE
+    TABLE_SCHEMA = 'OM'
+    AND TABLE_NAME = 'DOM_R_CODE';</pre>
 
 # Tạo đối tượng Date ở thời điểm hiện tại
 <pre>let currentDate = new Date();</pre>
