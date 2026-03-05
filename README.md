@@ -947,3 +947,16 @@ GROUP BY
 	WITHIN GROUP (ORDER BY CREATED_DATE DESC)
 	AS MERGED_LAST_NAME
 FROM HU_EMPLOYEE_CV</pre>
+
+# Bài toán khi sửa kiểu dữ liệu của cột ở Designer, bấm Ctrl + S bị bật pop up save text
+<pre>cách fix là
+vào Tools
+chọn Options
+chọn Designers
+
+có thể bấm vào Table and Database Designers
+hoặc không tùy phiên bản mới hoặc cũ
+
+xong rồi tắt cái
+Prevent saving changes that require table re-creation
+là xong</pre>
