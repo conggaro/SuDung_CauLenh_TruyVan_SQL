@@ -960,3 +960,14 @@ hoặc không tùy phiên bản mới hoặc cũ
 xong rồi tắt cái
 Prevent saving changes that require table re-creation
 là xong</pre>
+
+# Cầm bảng A đắp sang bảng B
+<pre>UPDATE D
+SET
+	D.TIME_START = L.TIME_START,
+	D.TIME_END = L.TIME_END
+FROM
+	AT_REGISTER_LEAVE L
+LEFT JOIN
+	AT_REGISTER_LEAVE_DETAIL D
+	ON D.REGISTER_ID = L.ID</pre>
