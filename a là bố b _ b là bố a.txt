@@ -1,0 +1,35 @@
+câu lệnh check
+SELECT a.id, a.PARENT_ID
+FROM HU_ORGANIZATION a
+JOIN HU_ORGANIZATION b 
+    ON a.PARENT_ID = b.id
+WHERE b.PARENT_ID = a.id;
+
+
+
+kiến trúc bảng cũng không có gì đặc sắc
+tên bảng HU_ORGANIZATION
+ID
+NAME
+PARENT_ID
+
+
+
+ví dụ
+-- 328 có phải bố không
+select *
+from HU_ORGANIZATION
+where PARENT_ID = 328
+
+
+-- 310 có phải bố không
+select *
+from HU_ORGANIZATION
+where PARENT_ID = 310
+
+
+310 lại gọi 328 là bố ?
+xóa 328 
+
+delete from HU_ORGANIZATION
+where id = 328
