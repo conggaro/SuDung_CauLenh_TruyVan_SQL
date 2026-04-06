@@ -971,3 +971,11 @@ FROM
 LEFT JOIN
 	AT_REGISTER_LEAVE_DETAIL D
 	ON D.REGISTER_ID = L.ID</pre>
+
+# Kiểm tra code tồn tại trong db
+<pre>if exists (select 1 from dbo.HU_ORGANIZATION where CODE = 'GEM_GROUP')
+    select cast(1 as bit)
+else if exists (select 1 from OM.DOM_O where CODE = 'GEM_GROUP')
+    select cast(1 as bit)
+else
+    select cast(0 as bit)</pre>
