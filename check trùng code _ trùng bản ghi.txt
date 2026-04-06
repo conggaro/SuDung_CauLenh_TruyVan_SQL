@@ -1,0 +1,63 @@
+Có — câu lệnh của bạn **đúng và dùng để kiểm tra giá trị `CODE` bị trùng trong SQL Server** 👍
+
+Cụ thể:
+
+```sql
+select count(CODE)
+from HU_ORGANIZATION
+group by CODE
+having count(CODE) > 1
+```
+
+### Ý nghĩa:
+
+* `group by CODE`: gom các dòng theo từng giá trị `CODE`
+* `count(CODE)`: đếm số lần mỗi `CODE` xuất hiện
+* `having count(CODE) > 1`: chỉ giữ lại những `CODE` xuất hiện **hơn 1 lần** → tức là bị trùng
+
+👉 Tuy nhiên, câu này chỉ trả về **số lượng**, chứ **không cho bạn biết CODE nào bị trùng**
+
+---
+
+### Cách cải thiện (thực tế hay dùng hơn):
+
+Nếu bạn muốn biết **CODE nào bị trùng**, nên viết:
+
+```sql
+select CODE, count(*) as SoLan
+from HU_ORGANIZATION
+group by CODE
+having count(*) > 1
+```
+
+👉 Kết quả:
+
+* `CODE`: giá trị bị trùng
+* `SoLan`: số lần xuất hiện
+
+---
+
+### Nếu muốn xem luôn các dòng bị trùng:
+
+```sql
+select *
+from HU_ORGANIZATION
+where CODE in (
+    select CODE
+    from HU_ORGANIZATION
+    group by CODE
+    having count(*) > 1
+)
+```
+
+---
+
+### Tóm lại:
+
+* ✅ Câu lệnh của bạn: **đúng, phát hiện có trùng**
+* ⚠️ Nhưng: **thiếu thông tin (không biết trùng cái nào)**
+* ✅ Nên dùng bản cải tiến để debug tốt hơn
+
+---
+
+Nếu bạn cần mình viết thêm câu lệnh để **xoá trùng (giữ lại 1 dòng)** hoặc **đánh dấu trùng**, mình có thể giúp tiếp 👍
